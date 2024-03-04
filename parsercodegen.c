@@ -1,4 +1,4 @@
-//Homework 3: Tiny PL/0 Compiler
+//Homework 3: PL0 Compiler
 //Authors: Daylen Hendricks, Brandon Ramlagan
 //COP 3402 Spring 2024
 //Date 3/8/2024
@@ -10,10 +10,21 @@
 //static values
 #define MAXNUM 5 //max number of digits for a number
 #define MAXIDENTIFIER 11 //max length of identifier name
+#define MAX_SYMBOL_TABLE_SIZE 500 //max size for symbol table
 
 //global variables
 int tokenArr[500] = {0};//finalized token array
 int tokenIndex = 0;
+
+typedef struct
+{
+int kind; // const = 1, var = 2, proc = 3
+char name[10]; // name up to 11 chars
+int val; // number (ASCII value)
+int level; // L level
+int addr; // M address
+int mark // to indicate unavailable or deleted
+} symbol;
 
 typedef enum {
 skipsym = 1, identsym, numbersym, plussym, minussym,
