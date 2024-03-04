@@ -27,7 +27,7 @@ typedef struct symbol
 }symbolTable;
 
 typedef enum {
-skipsym = 1, identsym, numbersym, plussym, minussym,
+oddsym = 1, identsym, numbersym, plussym, minussym,
 multsym, slashsym, fisym, eqsym, neqsym, lessym, leqsym,
 gtrsym, geqsym, lparentsym, rparentsym, commasym, semicolonsym,
 periodsym, becomessym, beginsym, endsym, ifsym, thensym,
@@ -139,23 +139,23 @@ int main(int argc, char *fileName[])
                 printf("var\t29\n");
             }
 
-            //procedure
-            else if(fileArr[i] == 112 && fileArr[i+1] == 114 && fileArr[i+2] == 111 && fileArr[i+3] == 99 && fileArr[i+4] == 101 && fileArr[i+5] == 100 && fileArr[i+6] == 117 && fileArr[i+7] == 114 && fileArr[i+8] == 101 && (fileArr[i+9] < 65 || fileArr[i+9] > 90) && (fileArr[i+9] < 97 || fileArr[i+9] > 122))
-            {
-                tokenArr[tokenIndex] = procsym;
-                tokenIndex++;
-                i += 9;
-                printf("procedure 30\n");
-            }
+            // //procedure
+            // else if(fileArr[i] == 112 && fileArr[i+1] == 114 && fileArr[i+2] == 111 && fileArr[i+3] == 99 && fileArr[i+4] == 101 && fileArr[i+5] == 100 && fileArr[i+6] == 117 && fileArr[i+7] == 114 && fileArr[i+8] == 101 && (fileArr[i+9] < 65 || fileArr[i+9] > 90) && (fileArr[i+9] < 97 || fileArr[i+9] > 122))
+            // {
+            //     tokenArr[tokenIndex] = procsym;
+            //     tokenIndex++;
+            //     i += 9;
+            //     printf("procedure 30\n");
+            // }
 
-            //call
-            else if(fileArr[i] == 99 && fileArr[i+1] == 97 && fileArr[i+2] == 108 && fileArr[i+3] == 108 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
-            {
-                tokenArr[tokenIndex] = callsym;
-                tokenIndex++;
-                i += 4;
-                printf("call\t27\n");
-            }
+            // //call
+            // else if(fileArr[i] == 99 && fileArr[i+1] == 97 && fileArr[i+2] == 108 && fileArr[i+3] == 108 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
+            // {
+            //     tokenArr[tokenIndex] = callsym;
+            //     tokenIndex++;
+            //     i += 4;
+            //     printf("call\t27\n");
+            // }
 
             //begin
             else if(fileArr[i] == 98 && fileArr[i+1] == 101 && fileArr[i+2] == 103 && fileArr[i+3] == 105 && fileArr[i+4] == 110 && (fileArr[i+5] < 65 || fileArr[i+5] > 90) && (fileArr[i+5] < 97 || fileArr[i+5] > 122))
@@ -198,14 +198,14 @@ int main(int argc, char *fileName[])
                 i += 4;
                 printf("then\t24\n");
             }
-            //else
-            else if(fileArr[i] == 101 && fileArr[i+1] == 108 && fileArr[i+2] == 115 && fileArr[i+3] == 101 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
-            {
-                tokenArr[tokenIndex] = elsesym;
-                tokenIndex++;
-                i += 4;
-                printf("else\t33\n");
-            }
+            // //else
+            // else if(fileArr[i] == 101 && fileArr[i+1] == 108 && fileArr[i+2] == 115 && fileArr[i+3] == 101 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
+            // {
+            //     tokenArr[tokenIndex] = elsesym;
+            //     tokenIndex++;
+            //     i += 4;
+            //     printf("else\t33\n");
+            // }
             //while
             else if(fileArr[i] == 119 && fileArr[i+1] == 104 && fileArr[i+2] == 105 && fileArr[i+3] == 108 && fileArr[i+4] == 101 && (fileArr[i+5] < 65 || fileArr[i+5] > 90) && (fileArr[i+5] < 97 || fileArr[i+5] > 122))
             {
