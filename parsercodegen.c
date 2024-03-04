@@ -1,7 +1,7 @@
-//Homework 2: PL0 Scanner
+//Homework 3: Tiny PL/0 Compiler
 //Authors: Daylen Hendricks, Brandon Ramlagan
 //COP 3402 Spring 2024
-//Date 2/16/2024
+//Date 3/8/2024
 
 //libraries
 #include <stdio.h>
