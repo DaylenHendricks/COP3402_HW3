@@ -34,11 +34,78 @@ periodsym, becomessym, beginsym, endsym, ifsym, thensym,
 whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
 readsym , elsesym} token_type;
 
-int symbolTableCheck()
+int symbolTableCheck(int ** identArray, int varCount, int * string)//checking for string/name
 {
-
+    int i = 0, j = 0, stringLen = 0;
+    for(i = 0; string[i] != '/0'; i++)//finding length of string
+    {
+        stringLen++;
+    }
+    
+        for(int i = 0; i <= varCount;)//begin search through name list
+        {
+            if(identArray[i][0] != string[0])//searching through the first letters of ident names to look for a match
+            {
+                i++;
+            }
+            else//when match is found, continue checking the rest of that string
+            {
+                for(int j = 0; j != '#';)//checking word until ending char:'#'
+                {
+                    if(identArray[i][j] == string[j])//next letter matches
+                    {
+                        j++;//next letter
+                    }
+                    else
+                    j = 0;//back to first letter of name
+                    i++;
+                    break;//go back to checking first chars starting with next name
+                }
+                if(identArray[i][j] == string[j])
+                {
+                    return(1);//return valid, name was found
+                    //NEEDS TO RETURN INDEX, HASN'T BEEN IMPLEMENTED YET
+                }
+            }
+        }
+        return(-1);//return invalid, name not found
 }
 
+void ConstDeclaration()
+{
+    int token; //current token
+    int Const_tokenIndex = 0; //function's tokenArray index
+    token = tokenArr[Const_tokenIndex];
+
+    if (token == constsym)
+    {
+        Const_tokenIndex++;
+        token = tokenArr[Const_tokenIndex];
+        if (token != identsym)
+        {
+            //error
+            exit(0);
+        }
+        if (SYMBOLTABLECHECK (token) == -1)
+        {
+            //error
+            exit(0);
+        }
+        // save ident name
+        // get next token
+        // if token != eqlsym
+            // error
+        // get next token
+        // if token != numbersym
+            // error
+        // add to symbol table (kind 1, saved name, number, 0, 0)
+        // get next token
+    // while token == commasym
+    // if token != semicolonsym
+        // error
+    // get next token
+    }
+};
 int main(int argc, char *fileName[])
 {
     int fileArr[500] = {0};//array to store input
@@ -47,10 +114,10 @@ int main(int argc, char *fileName[])
     int flag = 0;//EOF flag
     int lastVal;
     int varCount = 0;
-    char identArr[50][50];
+    char identArr[50][50] = {'#'};//"#" used for HW3 checking end of strings
     FILE* inputFile = fopen(fileName[1], "r");//file name string for input
 
-//printing source code
+    //printing source code
         printf("Source Program:\n");
         int printFlag = 0;
         for(int i = 0; printFlag == 0; i++)
@@ -469,10 +536,11 @@ int main(int argc, char *fileName[])
             printf("%d ", tokenArr[i]);
         }
 
-//end of lexical analyser/scanner
+//end of lexical analyser/scanner_________________________________
 
-//begin of syntactic analyser / parser
+//begin of syntactic analyser / parser____________________________
     printf("end scan, begin parser");
+    int blockFlag; //0 until program block is done or error
 
 // SYMBOLTABLECHECK (string)
     // linear search through symbol table looking at name
@@ -485,12 +553,15 @@ int main(int argc, char *fileName[])
     // emit HALT
 
 // BLOCK
-    // CONST-DECLARATION
+    while(blockFlag == 0)
+    {
+        CONSTDECLARATION();
+    }
     // numVars = VAR-DECLARATION
     // emit INC (M = 3 + numVars)
     // STATEMENT
 
-// CONST-DECLARATION
+// CONST-DECLARATION()
     // if token == const
     // do
         // get next token
