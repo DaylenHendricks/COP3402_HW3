@@ -430,6 +430,52 @@ void TERM()
     }
 };
 
+void FACTOR()
+{
+    int token = tokenArr[tokenIndex]; //current token
+    int symIdx;
+    if (token == identsym)
+    {
+        symIdx = SYMBOLTABLECHECK(token);
+        if (symIdx == -1)
+        {
+            // error
+        }
+        if (symbolTable[symIdx].kind == 1) //(const)
+        {
+            // emit LIT (M = table[symIdx].Value)
+        }
+        else //(var)
+        {
+            // emit LOD (M = table[symIdx].addr)
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+    }
+    else if (token == numbersym)
+    {
+        // emit LIT
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+    }
+    else if (token == lparentsym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        // EXPRESSION
+        if (token != rparentsym)
+        {
+            // error
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+    }
+    else
+    {
+        // error
+    }
+};
+
 
 int main(int argc, char *fileName[])
 {
