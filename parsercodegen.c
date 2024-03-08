@@ -94,53 +94,89 @@ int symbolTableCheck(int ** identArray, int varCount, int * string)//checking fo
 
 
 
-void ConstDeclaration()
+void ConstDeclaration(int ** identArray, int varCount)
 {
     int token; //current token
-    int Const_tokenIndex = 0; //function's tokenArray index
-    token = tokenArr[Const_tokenIndex];
+    int tokenIndex = 0; //function's tokenArray index
+    token = tokenArr[tokenIndex];
 
     if (token == constsym)
     {
         do
         {
-            Const_tokenIndex++;
-            token = tokenArr[Const_tokenIndex];
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
             if (token != identsym)
             {
                 //error
                 exit(0);
             }
-            if (SYMBOLTABLECHECK (token) == -1)
+            if (symbolTableCheck(identArray, varCount, token) == -1)
             {
                 //error
                 exit(0);
             }
             // save ident name
-            Const_tokenIndex++;
-            token = tokenArr[Const_tokenIndex];
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
             if (token != eqsym)
             {
                 // error
             }
-            Const_tokenIndex++;
-            token = tokenArr[Const_tokenIndex];
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
             if (token != numbersym)
             {
                 // error
             }
             // add to symbol table (kind 1, saved name, number, 0, 0)
-            Const_tokenIndex++;
-            token = tokenArr[Const_tokenIndex];
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
         } while (token == commasym);
         if (token != semicolonsym)
         {
             //error
         }
-        Const_tokenIndex++;
-        token = tokenArr[Const_tokenIndex];
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
     }
 };
+
+int VarDeclaration() //returns number of variables
+{
+    int numVars = 0;
+    int token; //current token
+    token = tokenArr[tokenIndex];
+    if (token == varsym)
+    {
+        do
+        {
+            numVars++;
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            if (token != identsym)
+            {
+                // error
+            }
+            if (SYMBOLTABLECHECK(token) != -1)
+            {
+                // error
+            }
+            // add to symbol table (kind 2, ident, 0, 0, var# + 2)
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+        } while (token == commasym);
+
+        if (token != semicolonsym)
+        {
+            // error
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+    }
+    return(numVars);
+};
+
 
 int main(int argc, char *fileName[])
 {
