@@ -178,20 +178,30 @@ int VarDeclaration(int ** identArray, int varCount) //returns number of variable
             token = tokenArr[tokenIndex];
             if (token != identsym)
             {
-                // error
+                printf("Error: var keywords must be followed by identifier");
+                exit(0);
             }
-            if (symbolTableCheck(identArray, varCount, token/*the name*/) != -1)
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            char tempName [20];
+            for(int i = 0; tempName[i] != '#'; i++)
             {
-                // error
+                tempName[i] = identArray[token][i];
+            }
+            if (symbolTableCheck(identArray, varCount, tempName) != -1)
+            {
+                printf("Error: symbol name has already been declared");
+                exit(0);
             }
             // add to symbol table (kind 2, ident, 0, 0, var# + 2)
+            insertSymbolTable(2, tempName, 0, 0, numVars + 2);
             tokenIndex++;
             token = tokenArr[tokenIndex];
         } while (token == commasym);
 
         if (token != semicolonsym)
         {
-            // error
+            printf("Error: variable declarations must be followed by a semicolon");
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
