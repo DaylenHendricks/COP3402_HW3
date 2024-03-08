@@ -54,8 +54,9 @@ void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //
 
 int symbolTableCheck(int ** identArray, int varCount, int * string)//checking for string/name
 {
-    
-    // int i = 0, j = 0, stringLen = 0, currentLen = 0;
+
+    int i = 0, j = 0, stringLen = 0, currentLen = 0;
+
     // for(i = 0; string[i] != '/0'; i++)//finding length of string
     // {
     //     stringLen++;
@@ -102,7 +103,9 @@ int symbolTableCheck(int ** identArray, int varCount, int * string)//checking fo
 
 
 
-void ConstDeclaration(int** identArr)
+
+void ConstDeclaration(int ** identArray, int varCount)
+
 {
     int token; //current token
     int tokenIndex = 0; //function's tokenArray index
@@ -111,6 +114,7 @@ void ConstDeclaration(int** identArr)
     if (token == constsym)
     {
         do
+
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
@@ -160,7 +164,92 @@ void ConstDeclaration(int** identArr)
         tokenIndex++;
         token = tokenArr[tokenIndex];
     }
+    return(numVars);
 };
+
+int STATEMENT()
+{
+    int token = tokenArr[tokenIndex]; //current token
+    int symIdx;
+
+    if (token == identsym)
+    {
+       //symIdx = symbolTableCheck(identArray, varCount, token/*the name*/);
+        if (symIdx == -1)
+        {
+            // error
+        }
+        //if (table[symIdx].kind != 2 /*(not a var)*/)
+        {
+            // error
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        if (token != becomessym)
+        {
+            // error
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        // EXPRESSION
+        // emit STO (M = table[symIdx].addr)
+        // return
+    }
+    // if token == beginsym
+        // do
+            // get next token
+            // STATEMENT
+        // while token == semicolonsym
+        // if token != endsym
+            // error
+        // get next token
+        // return
+    // if token == ifsym
+        // get next token
+        // CONDITION
+        // jpcIdx = current code index
+        // emit JPC
+        // if token != thensym
+            // error
+        // get next token
+        // STATEMENT
+        // code[jpcIdx].M = current code index
+        // return
+    // if token == whilesym
+        // get next token
+        // loopIdx = current code index
+        // CONDITION
+        // if token != dosym
+            // error
+        // get next token
+        // jpcIdx = current code index
+        // emit JPC
+        // STATEMENT
+        // emit JMP (M = loopIdx)
+        // code[jpcIdx].M = current code index
+        // return
+    // if token == readsym
+        // get next token
+        // if token != identsym
+            // error
+        // symIdx = symbolTableCheck (token)
+        // if symIdx == -1
+            // error
+        // if table[symIdx].kind != 2 (not a var)
+        // error
+        // get next token
+        // emit READ
+        // emit STO (M = table[symIdx].addr)
+        // return
+    // if token == writesym
+        // get next token
+        // EXPRESSION
+        // emit WRITE
+        // return
+
+};
+
+
 int main(int argc, char *fileName[])
 {
     int fileArr[500] = {0};//array to store input
@@ -242,7 +331,7 @@ int main(int argc, char *fileName[])
         while(flag1 == 0)
         {
 
-    //reserved words        
+//reserved words        
             if(fileArr[i] == 32)//space
             {
                 i++;
