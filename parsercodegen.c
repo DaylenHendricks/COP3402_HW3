@@ -42,7 +42,12 @@ readsym , elsesym} token_type;
 
 int symbolTableCheck(int ** identArray, int varCount, int * string)//checking for string/name
 {
-    // int i = 0, j = 0, stringLen = 0, currentLen = 0;
+
+
+
+
+    int i = 0, j = 0, stringLen = 0, currentLen = 0;
+    
     // for(i = 0; string[i] != '/0'; i++)//finding length of string
     // {
     //     stringLen++;
@@ -97,33 +102,46 @@ void ConstDeclaration()
 
     if (token == constsym)
     {
+        do
+        {
+            Const_tokenIndex++;
+            token = tokenArr[Const_tokenIndex];
+            if (token != identsym)
+            {
+                //error
+                exit(0);
+            }
+            if (SYMBOLTABLECHECK (token) == -1)
+            {
+                //error
+                exit(0);
+            }
+            // save ident name
+            Const_tokenIndex++;
+            token = tokenArr[Const_tokenIndex];
+            if (token != eqsym)
+            {
+                // error
+            }
+            Const_tokenIndex++;
+            token = tokenArr[Const_tokenIndex];
+            if (token != numbersym)
+            {
+                // error
+            }
+            // add to symbol table (kind 1, saved name, number, 0, 0)
+            Const_tokenIndex++;
+            token = tokenArr[Const_tokenIndex];
+        } while (token == commasym);
+        if (token != semicolonsym)
+        {
+            //error
+        }
         Const_tokenIndex++;
         token = tokenArr[Const_tokenIndex];
-        if (token != identsym)
-        {
-            //error
-            exit(0);
-        }
-        if (SYMBOLTABLECHECK (token) == -1)
-        {
-            //error
-            exit(0);
-        }
-        // save ident name
-        // get next token
-        // if token != eqlsym
-            // error
-        // get next token
-        // if token != numbersym
-            // error
-        // add to symbol table (kind 1, saved name, number, 0, 0)
-        // get next token
-    // while token == commasym
-    // if token != semicolonsym
-        // error
-    // get next token
     }
 };
+
 int main(int argc, char *fileName[])
 {
     int fileArr[500] = {0};//array to store input
@@ -205,7 +223,7 @@ int main(int argc, char *fileName[])
         while(flag1 == 0)
         {
 
-    //reserved words        
+//reserved words        
             if(fileArr[i] == 32)//space
             {
                 i++;
