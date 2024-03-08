@@ -111,7 +111,7 @@ void ConstDeclaration(int ** identArray, int varCount)
                 //error
                 exit(0);
             }
-            if (symbolTableCheck(identArray, varCount, token) == -1)
+            if (symbolTableCheck(identArray, varCount, token/*the name*/) == -1)
             {
                 //error
                 exit(0);
@@ -142,7 +142,7 @@ void ConstDeclaration(int ** identArray, int varCount)
     }
 };
 
-int VarDeclaration() //returns number of variables
+int VarDeclaration(int ** identArray, int varCount) //returns number of variables
 {
     int numVars = 0;
     int token; //current token
@@ -158,7 +158,7 @@ int VarDeclaration() //returns number of variables
             {
                 // error
             }
-            if (SYMBOLTABLECHECK(token) != -1)
+            if (symbolTableCheck(identArray, varCount, token/*the name*/) != -1)
             {
                 // error
             }
