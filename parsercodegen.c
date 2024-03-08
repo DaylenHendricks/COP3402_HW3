@@ -151,7 +151,7 @@ int VarDeclaration(int ** identArray, int varCount) //returns number of variable
             {
                 tempName[i] = identArray[token][i];
             }
-            if (symbolTableCheck(identArray, varCount, tempName) != -1)
+            if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
                 exit(0);
