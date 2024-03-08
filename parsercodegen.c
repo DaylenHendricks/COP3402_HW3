@@ -42,7 +42,7 @@ int tp = 1; //symbol table pointer
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //insert into symbol table
 {
     symbolTable[tp].kind = kind;
-    strcpy(symbolTable[tp], name);
+    strcpy(symbolTable[tp].name, name);
     symbolTable[tp].val = val;
     symbolTable[tp].level = level;
     symbolTable[tp].addr = val;
@@ -84,11 +84,6 @@ void ConstDeclaration(int** identArr)
                 printf("Error: constant keyword must be followed by identifier");
                 exit(0);
             }
-            if (SYMBOLTABLECHECK (token) == -1)
-            {
-                printf("Error: symbol name has already been declared");
-                exit(0);
-            }
             // save ident name
             tokenIndex++;
             token = tokenArr[tokenIndex];
@@ -96,6 +91,11 @@ void ConstDeclaration(int** identArr)
             for(int i = 0; tempName[i] != '#'; i++)
             {
                 tempName[i] = identArr[token][i];
+            }
+            if (symbolTableCheck(tempName) == -1)
+            {
+                printf("Error: symbol name has already been declared");
+                exit(0);
             }
             tokenIndex++;
             token = tokenArr[tokenIndex];
