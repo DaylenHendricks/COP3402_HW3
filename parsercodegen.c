@@ -320,6 +320,69 @@ int STATEMENT()
     }
 };
 
+void CONDITION()
+{
+    int token = tokenArr[tokenIndex]; //current token
+    if (token == oddsym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        // EXPRESSION
+        // emit ODD
+    }
+    else
+    {
+        // EXPRESSION
+        if (token == eqsym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit EQL
+        }
+        else if (token == neqsym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit NEQ
+        }
+        else if (token == lessym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit LSS
+        }
+        else if (token == leqsym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit LEQ
+        }
+        else if (token == gtrsym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit GTR
+        }
+        else if (token == geqsym)
+        {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+            // EXPRESSION
+            // emit GEQ
+        }
+        else
+        {
+            // error
+        }
+    }
+};
+
+
 int main(int argc, char *fileName[])
 {
     int fileArr[500] = {0};//array to store input
