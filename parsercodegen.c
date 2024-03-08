@@ -227,59 +227,88 @@ int STATEMENT()
         // emit STO (M = table[symIdx].addr)
         // return
     }
-    // if token == beginsym
-        // do
-            // get next token
+    if (token == beginsym)
+    {
+        do
+        {
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
             // STATEMENT
-        // while token == semicolonsym
-        // if token != endsym
+        }while (token == semicolonsym);
+        if (token != endsym)
+        {
             // error
-        // get next token
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
         // return
-    // if token == ifsym
-        // get next token
+        }
+    }
+    if (token == ifsym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // CONDITION
         // jpcIdx = current code index
         // emit JPC
-        // if token != thensym
+        if (token != thensym)
+        {
             // error
-        // get next token
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // STATEMENT
         // code[jpcIdx].M = current code index
         // return
-    // if token == whilesym
-        // get next token
+    }
+    if (token == whilesym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // loopIdx = current code index
         // CONDITION
-        // if token != dosym
+        if (token != dosym)
+        {
             // error
-        // get next token
+        }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // jpcIdx = current code index
         // emit JPC
         // STATEMENT
         // emit JMP (M = loopIdx)
         // code[jpcIdx].M = current code index
         // return
-    // if token == readsym
-        // get next token
-        // if token != identsym
+    }
+    if (token == readsym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        if (token != identsym)
+        {
             // error
+        }
         // symIdx = symbolTableCheck (token)
-        // if symIdx == -1
+        if (symIdx == -1)
+        {
             // error
-        // if table[symIdx].kind != 2 (not a var)
-        // error
-        // get next token
+        }
+        // if (table[symIdx].kind != 2 /*not a var*/)
+            // error
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // emit READ
         // emit STO (M = table[symIdx].addr)
         // return
-    // if token == writesym
-        // get next token
+    }
+    if (token == writesym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         // EXPRESSION
         // emit WRITE
         // return
+    }
 };
-
 
 int main(int argc, char *fileName[])
 {
