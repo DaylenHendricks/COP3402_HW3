@@ -12,9 +12,6 @@
 #define MAXIDENTIFIER 11 //max length of identifier name
 #define MAX_SYMBOL_TABLE_SIZE 500 //max size for symbol table
 
-//global variables
-int tokenArr[500] = {0};//finalized token array
-int tokenIndex = 0;
 
 typedef struct symbol
 {
@@ -24,7 +21,7 @@ typedef struct symbol
     int level; // L level
     int addr; // M address
     int mark; // to indicate unavailable or deleted
-}symbolTable;
+}symbol;
 
 typedef enum {
 oddsym = 1, identsym, numbersym, plussym, minussym,
@@ -34,14 +31,30 @@ periodsym, becomessym, beginsym, endsym, ifsym, thensym,
 whilesym, dosym, callsym, constsym, varsym, procsym, writesym,
 readsym , elsesym} token_type;
 
+//global variables
+int tokenArr[500] = {0};//finalized token array
+int tokenIndex = 0;
+symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
+int tp = 1; //symbol table pointer
 
 
 
 
 //I did this wrong I need to redo
 
+void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //insert into symbol table
+{
+    symbolTable[tp].kind = kind;
+    strcpy(symbolTable[tp], name);
+    symbolTable[tp].val = val;
+    symbolTable[tp].level = level;
+    symbolTable[tp].addr = val;
+    tp++;
+}
+
 int symbolTableCheck(int ** identArray, int varCount, int * string)//checking for string/name
 {
+    
     // int i = 0, j = 0, stringLen = 0, currentLen = 0;
     // for(i = 0; string[i] != '/0'; i++)//finding length of string
     // {
@@ -89,39 +102,63 @@ int symbolTableCheck(int ** identArray, int varCount, int * string)//checking fo
 
 
 
-void ConstDeclaration()
+void ConstDeclaration(int** identArr)
 {
     int token; //current token
-    int Const_tokenIndex = 0; //function's tokenArray index
-    token = tokenArr[Const_tokenIndex];
+    int tokenIndex = 0; //function's tokenArray index
+    token = tokenArr[tokenIndex];
 
     if (token == constsym)
     {
-        Const_tokenIndex++;
-        token = tokenArr[Const_tokenIndex];
-        if (token != identsym)
+        do
         {
-            //error
-            exit(0);
-        }
-        if (SYMBOLTABLECHECK (token) == -1)
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            if (token != identsym)
+            {
+                printf("Error: constant keyword must be followed by identifier");
+                exit(0);
+            }
+            if (SYMBOLTABLECHECK (token) == -1)
+            {
+                printf("Error: symbol name has already been declared");
+                exit(0);
+            }
+            // save ident name
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            char tempName [20];
+            for(int i = 0; tempName[i] != '#'; i++)
+            {
+                tempName[i] = identArr[token][i];
+            }
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            if (token != eqsym)
+            {
+                printf("Error: constants must be assigned with =");
+                exit(0);
+            }
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            if (token != numbersym)
+            {
+                printf("Error: constants must be assigned an integer value");
+                exit(0);
+            }
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            // add to symbol table (kind 1, saved name, number, 0, 0)
+            insertSymbolTable(1, tempName, token, 0, 0);
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+        } while (token == commasym);
+        if (token != semicolonsym)
         {
-            //error
-            exit(0);
+            printf("Error: constant declarations must be followed by a semicolon");
         }
-        // save ident name
-        // get next token
-        // if token != eqlsym
-            // error
-        // get next token
-        // if token != numbersym
-            // error
-        // add to symbol table (kind 1, saved name, number, 0, 0)
-        // get next token
-    // while token == commasym
-    // if token != semicolonsym
-        // error
-    // get next token
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
     }
 };
 int main(int argc, char *fileName[])
