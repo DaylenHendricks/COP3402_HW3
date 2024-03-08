@@ -49,56 +49,19 @@ void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //
     tp++;
 }
 
-//I did this wrong I need to redo
-int symbolTableCheck(int ** identArray, int varCount, int * string)//checking for string/name
+int symbolTableCheck(char name[10])
 {
-
-
-
-
-    int i = 0, j = 0, stringLen = 0, currentLen = 0;
-    
-    // for(i = 0; string[i] != '/0'; i++)//finding length of string
-    // {
-    //     stringLen++;
-    // }
-    
-    //     for(int i = 0; i <= varCount;)//begin search through name list
-    //     {
-    //         if(identArray[i][0] != string[0])//searching through the first letters of ident names to look for a match
-    //         {
-    //             i++;
-    //         }
-    //         else//when match is found, continue checking the rest of that string
-    //         {
-    //             for(int j = 0; j != '#';)//checking word until ending char:'#'
-    //             {
-    //                 if(identArray[i][j] == string[j])//next letter matches
-    //                 {
-    //                     currentLen++;//checking length of current string
-    //                     if(currentLen > stringLen)//if current string is longer than what we're searching for, break to keep checking
-    //                     {
-    //                         break;
-    //                     }
-    //                     else
-    //                     j++;//next letter
-    //                 }
-    //                 else
-    //                 {
-    //                 j = 0;//back to first letter of name
-    //                 i++;
-    //                 break;//go back to checking first chars starting with next name
-    //                 }
-    //             }
-    //             if(identArray[i][j] == string[j])
-    //             {
-    //                 return(1);//return valid, name was found
-    //                 //NEEDS TO RETURN INDEX, HASN'T BEEN IMPLEMENTED YET
-    //             }
-    //         }
-    //     }
-    //     return(-1);//return invalid, name not found
+    for(int i = 0; i < tp; i++)
+    {
+        if(strcmp(name, symbolTable[i].name) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
+
+
 
 
 
