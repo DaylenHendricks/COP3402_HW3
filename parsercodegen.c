@@ -395,6 +395,36 @@ void EXPRESSION()//(HINT: modify it to match the grammar)
     }
 };
 
+void TERM()
+{
+    int token = tokenArr[tokenIndex]; //current token
+    // FACTOR
+    while (token == multsym || token == slashsym)
+    {
+        if (token == multsym)
+        {
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            // FACTOR
+            // emit MUL
+        }
+        else if (token == slashsym)
+        {
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            // FACTOR
+            // emit DIV
+        }
+        else
+        {
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+            // FACTOR
+            // emit MOD
+        }
+    }
+};
+
 
 int main(int argc, char *fileName[])
 {
