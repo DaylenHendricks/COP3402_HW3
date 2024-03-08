@@ -340,6 +340,60 @@ void CONDITION()
     }
 };
 
+void EXPRESSION()//(HINT: modify it to match the grammar)
+{
+    int token = tokenArr[tokenIndex]; //current token
+    if (token == minussym)
+    {
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        // TERM
+        // emit NEG
+        while (token == plussym || token == minussym)
+        {
+            if (token == plussym)
+            {
+                tokenIndex++;
+                token = tokenArr[tokenIndex];
+                // TERM
+                // emit ADD
+            }
+            else
+            {
+                tokenIndex++;
+                token = tokenArr[tokenIndex];
+                // TERM
+                // emit SUB
+            }
+        }
+    }
+    else
+    {
+        if (token == plussym)
+        {
+            tokenIndex++;
+            token = tokenArr[tokenIndex];
+        }
+        // TERM
+        while (token == plussym || token == minussym)
+        {
+            if (token == plussym)
+            {
+                tokenIndex++;
+                token = tokenArr[tokenIndex];
+                // TERM
+                // emit ADD
+            }
+            else
+            {
+                tokenIndex++;
+                token = tokenArr[tokenIndex];
+                // TERM
+                // emit SUB
+            }
+        }
+    }
+};
 
 
 int main(int argc, char *fileName[])
