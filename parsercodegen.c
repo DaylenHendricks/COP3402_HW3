@@ -167,24 +167,30 @@ int VarDeclaration(int ** identArray, int varCount) //returns number of variable
     return(numVars);
 };
 
-int STATEMENT()
+int STATEMENT(int ** identArray)
 {
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
 
     if (token == identsym)
     {
-       //symIdx = symbolTableCheck(identArray, varCount, token/*the name*/);
-        if (symIdx == -1)
-        {
-            // error
-        }
-        //if (table[symIdx].kind != 2 /*(not a var)*/)
-        {
-            // error
-        }
         tokenIndex++;
         token = tokenArr[tokenIndex];
+        char tempName [10];
+        for(int i = 0; tempName[i] != '#'; i++)
+        {
+            tempName[i] = identArray[token][i];
+        }
+        symIdx = symbolTableCheck(tempName);
+        if (symIdx == -1)
+        {
+            printf("Error: undeclared identifier");
+            exit(0);
+        }
+        if (symbolTable[symIdx].kind != 2 /*(not a var)*/)
+        {
+            // error
+        }
         if (token != becomessym)
         {
             // error
@@ -277,7 +283,6 @@ int STATEMENT()
         // return
     }
 };
-
 void CONDITION()
 {
     int token = tokenArr[tokenIndex]; //current token
