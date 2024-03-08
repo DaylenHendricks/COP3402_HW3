@@ -3,6 +3,8 @@
 //COP 3402 Spring 2024
 //Date 3/8/2024
 
+
+
 //libraries
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +13,6 @@
 #define MAXNUM 5 //max number of digits for a number
 #define MAXIDENTIFIER 11 //max length of identifier name
 #define MAX_SYMBOL_TABLE_SIZE 500 //max size for symbol table
-
 
 typedef struct symbol
 {
@@ -60,12 +61,6 @@ int symbolTableCheck(char name[10])
     }
     return -1;
 }
-
-
-
-
-
-
 
 void ConstDeclaration(int** identArr)
 {
@@ -344,6 +339,7 @@ void CONDITION()
         }
     }
 };
+
 
 
 int main(int argc, char *fileName[])
