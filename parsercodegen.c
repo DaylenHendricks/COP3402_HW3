@@ -497,6 +497,8 @@ int main(int argc, char *fileName[])
 
 // PROGRAM
     int token = tokenArr[0];
+    tokenIndex = 0; //function's tokenArray index
+    printf("TokenIndexMain:%d", tokenIndex);
     block(identArr);
     if (token != periodsym)
     {
@@ -547,7 +549,6 @@ void ConstDeclaration(char identArr[50][12])
     printf("\ncalled ConstDeclaration");
     int token; //current token
     token = tokenArr[tokenIndex];
-
     if (token == constsym)
     {printf("|constsym");
         do
@@ -604,6 +605,7 @@ void ConstDeclaration(char identArr[50][12])
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
+        printf("TokenID:%d",tokenIndex);
     }
     else
     printf("const not detected");
@@ -612,9 +614,9 @@ void ConstDeclaration(char identArr[50][12])
 int VarDeclaration(char identArray[50][12], int varCount) //returns number of variables
 {
     printf("\ncalled VarDeclaration");
+    printf("|tokenID:%d", tokenIndex);
     int numVars = 0;
     token = tokenArr[tokenIndex];
-    printf("|tokenID:%d", tokenIndex);
     if (token == varsym)
     {printf("|varsym");
         do
