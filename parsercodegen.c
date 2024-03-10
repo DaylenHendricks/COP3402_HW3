@@ -496,12 +496,13 @@ int main(int argc, char *fileName[])
     // emit HALT
 }
 
-/*end of main_________________________________________________________________________
-_______________________________________________________________________________
-_____________________________________________________________________________________*/
+/*end of main____________________________________________________________________________________________________
+_________________________________________________________________________________________________________________
+_________________________________________________________________________________________________________________*/
 
 void block(char identArr[50][50])
 {
+    printf("\ncalled block");
     ConstDeclaration(identArr);
     int numVars = VarDeclaration(identArr, numVars);
     //emit INC (M = 3 + numVars)
@@ -510,6 +511,7 @@ void block(char identArr[50][50])
 
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //insert into symbol table
 {
+    printf("\ncalled insertSymbolTable");
     symbolTable[tp].kind = kind;
     strcpy(symbolTable[tp].name, name);
     symbolTable[tp].val = val;
@@ -520,6 +522,7 @@ void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //
 
 int symbolTableCheck(char name[10])
 {
+    printf("\ncalled symbolTableCheck");
     for(int i = 0; i < tp; i++)
     {
         if(strcmp(name, symbolTable[i].name) == 0)
@@ -532,6 +535,7 @@ int symbolTableCheck(char name[10])
 
 void ConstDeclaration(char identArr[50][50])
 {
+    printf("\ncalled ConstDeclaration");
     int token; //current token
     int tokenIndex = 0; //function's tokenArray index
     token = tokenArr[tokenIndex];
@@ -590,6 +594,7 @@ void ConstDeclaration(char identArr[50][50])
 
 int VarDeclaration(char identArray[50][50], int varCount) //returns number of variables
 {
+    printf("\ncalled VarDeclaration");
     int numVars = 0;
     int token; //current token
     token = tokenArr[tokenIndex];
@@ -634,6 +639,7 @@ int VarDeclaration(char identArray[50][50], int varCount) //returns number of va
 
 int STATEMENT(char identArray[50][50])
 {
+    printf("\ncalled STATEMENT");
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
 
@@ -768,8 +774,10 @@ int STATEMENT(char identArray[50][50])
         return(0);
     }
 };
+
 void CONDITION(char identArray[50][50])
 {
+    printf("\ncalled CONDITION");
     int token = tokenArr[tokenIndex]; //current token
     if (token == oddsym)
     {
@@ -832,6 +840,7 @@ void CONDITION(char identArray[50][50])
 
 void EXPRESSION(char identArray[50][50])//(HINT: modify it to match the grammar)
 {
+    printf("\ncalled EXPRESSION");
     int token = tokenArr[tokenIndex]; //current token
     if (token == minussym)
     {
@@ -887,6 +896,7 @@ void EXPRESSION(char identArray[50][50])//(HINT: modify it to match the grammar)
 
 void TERM(char identArray[50][50])
 {
+    printf("\ncalled TERM");
     int token = tokenArr[tokenIndex]; //current token
     FACTOR(identArray);
     while (token == multsym || token == slashsym)
@@ -917,6 +927,7 @@ void TERM(char identArray[50][50])
 
 void FACTOR(char identArray[50][50])
 {
+    printf("\ncalled FACTOR");
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
     if (token == identsym)
