@@ -238,6 +238,12 @@ int STATEMENT(int ** identArray)
         token = tokenArr[tokenIndex];
         STATEMENT(identArray);
         // code[jpcIdx].M = current code index
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        if(token != fisym)
+        {
+        //error
+        }
         return;
     }
     if (token == whilesym)
