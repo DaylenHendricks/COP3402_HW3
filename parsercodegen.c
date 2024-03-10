@@ -200,8 +200,9 @@ int STATEMENT(int ** identArray)
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // EXPRESSION
+        EXPRESSION(identArray);
         // emit STO (M = table[symIdx].addr)
-        // return
+        return;
     }
     if (token == beginsym)
     {
@@ -209,57 +210,54 @@ int STATEMENT(int ** identArray)
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // STATEMENT
+            STATEMENT(identArray);
         }while (token == semicolonsym);
         if (token != endsym)
         {
-            // error
-            tokenIndex++;
-            token = tokenArr[tokenIndex];
-        // return
+            printf("Error: begin must be followed by end");
+            exit(0);
         }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        return;
+        
     }
     if (token == ifsym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // CONDITION
+        CONDITION(identArray);
         // jpcIdx = current code index
         // emit JPC
         if (token != thensym)
         {
-            // error
+            printf("Error: if must be followed by then");
+            exit(0);
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // STATEMENT
+        STATEMENT(identArray);
         // code[jpcIdx].M = current code index
-        // return
-        tokenIndex++;
-        token = tokenArr[tokenIndex];
-        if(token != fisym)
-        {
-            //error
-        }
+        return;
     }
     if (token == whilesym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // loopIdx = current code index
-        // CONDITION
+        CONDITION(identArray);
         if (token != dosym)
         {
-            // error
+            printf("Error: while must be followed by do");
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // jpcIdx = current code index
         // emit JPC
-        // STATEMENT
+        STATEMENT(identArray);
         // emit JMP (M = loopIdx)
         // code[jpcIdx].M = current code index
-        // return
+        return;
     }
     if (token == readsym)
     {
@@ -269,82 +267,90 @@ int STATEMENT(int ** identArray)
         {
             // error
         }
-        // symIdx = symbolTableCheck (token)
+        char tempName [10];
+        for(int i = 0; tempName[i] != '#'; i++)
+        {
+            tempName[i] = identArray[token][i];
+        }
+        symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
         {
-            // error
+            printf("Error: undeclared identifier");
+            exit(0);
         }
-        // if (table[symIdx].kind != 2 /*not a var*/)
-            // error
+        if (symbolTable[symIdx].kind != 2 /*(not a var)*/)
+        {
+            printf("Error: only variable values may be altered");
+            exit(0);
+        }
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // emit READ
         // emit STO (M = table[symIdx].addr)
-        // return
+        return;
     }
     if (token == writesym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // EXPRESSION
+        EXPRESSION(identArray);
         // emit WRITE
-        // return
+        return;
     }
 };
-
-void CONDITION()
+void CONDITION(int ** identArray)
 {
     int token = tokenArr[tokenIndex]; //current token
     if (token == oddsym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        EXPRESSION();
+        EXPRESSION(identArray);
         // emit ODD
     }
     else
     {
-        EXPRESSION();
+        EXPRESSION(identArray);
         if (token == eqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit EQL
         }
         else if (token == neqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit NEQ
         }
         else if (token == lessym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit LSS
         }
         else if (token == leqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit LEQ
         }
         else if (token == gtrsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit GTR
         }
         else if (token == geqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            EXPRESSION();
+            EXPRESSION(identArray);
             // emit GEQ
         }
         else
@@ -354,14 +360,14 @@ void CONDITION()
     }
 };
 
-void EXPRESSION()//(HINT: modify it to match the grammar)
+void EXPRESSION(int ** identArray)//(HINT: modify it to match the grammar)
 {
     int token = tokenArr[tokenIndex]; //current token
     if (token == minussym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // TERM
+        TERM(identArray);
         // emit NEG
         while (token == plussym || token == minussym)
         {
@@ -409,46 +415,52 @@ void EXPRESSION()//(HINT: modify it to match the grammar)
     }
 };
 
-void TERM()
+void TERM(int ** identArray)
 {
     int token = tokenArr[tokenIndex]; //current token
-    // FACTOR
+    FACTOR(identArray);
     while (token == multsym || token == slashsym)
     {
         if (token == multsym)
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // FACTOR
+            FACTOR(identArray);
             // emit MUL
         }
         else if (token == slashsym)
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // FACTOR
+            FACTOR(identArray);
             // emit DIV
         }
         else
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // FACTOR
+            FACTOR(identArray);
             // emit MOD
         }
     }
 };
 
-void FACTOR()
+void FACTOR(int ** identArray)
 {
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
     if (token == identsym)
     {
-        symIdx = SYMBOLTABLECHECK(token);
+        char tempName [10];
+        for(int i = 0; tempName[i] != '#'; i++)
+        {
+            tempName[i] = identArray[token][i];
+        }
+        symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
         {
-            // error
+            printf("Error: undeclared identifier");
+            exit(0);
         }
         if (symbolTable[symIdx].kind == 1) //(const)
         {
@@ -471,10 +483,10 @@ void FACTOR()
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // EXPRESSION
+        EXPRESSION(identArray);
         if (token != rparentsym)
         {
-            // error
+            printf("Error: right parenthesis must follow left parenthesis");
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
