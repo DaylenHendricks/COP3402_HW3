@@ -572,7 +572,7 @@ void ConstDeclaration(char identArr[50][12])
             }
             printf("|name stored: %s", tempName);
             varCount++;
-            if (symbolTableCheck(tempName) == -1)
+            if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
                 exit(0);
