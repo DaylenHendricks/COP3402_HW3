@@ -60,9 +60,9 @@ int main(int argc, char *fileName[])
     int lastVal;
     int varCount = 0;
     char identArr[50][50];
-    for(int i = 0; i<=50; i++)//"#" used for HW3 checking end of strings
+    for(int i = 0; i <=50 ; i++)//"#" used for HW3 checking end of strings
     {
-        for(int j = 0; j<=50; j++)
+        for(int j = 0; j <= 50; j++)
         {
         identArr[i][j] = '#';
         }
@@ -564,7 +564,7 @@ void ConstDeclaration(char identArr[50][50])
             char tempName [20];
             for(int i = 0; identArr[token][i] != '#'; i++)
             {
-                printf("%dletter stored", i);
+                printf("|%dletters stored", i);
                 tempName[i] = identArr[token][i];
             }
             printf("|name stored");
