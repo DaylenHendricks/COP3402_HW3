@@ -38,6 +38,7 @@ int tokenArr[500] = {0};//finalized token array
 int tokenIndex = 0;
 symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
+int varCount = 0;
 
 void block(char identArray[50][12]);
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
@@ -58,7 +59,6 @@ int main(int argc, char *fileName[])
     int curVal = 0;//current input value
     int flag = 0;//EOF flag
     int lastVal;
-    int varCount = 0;
     char identArr[50][12];
     for(int i = 0; i <=50 ; i++)//"#" used for HW3 checking end of strings
     {
@@ -564,13 +564,14 @@ void ConstDeclaration(char identArr[50][12])
             token = tokenArr[tokenIndex];
             printf("|next token:%d", token);
             char tempName [20];
-            for(int i = 0; identArr[token][i] != '#'; i++)
+            for(int i = 0; identArr[varCount][i] != '#'; i++)
             {
                 printf("|%dletter(s) stored:", (i + 1));
-                tempName[i] = identArr[token][i];
-                printf("%c", identArr[token][i]);
+                tempName[i] = identArr[varCount][i];
+                printf("%c", identArr[varCount][i]);
             }
             printf("|name stored: %s", tempName);
+            varCount++;
             if (symbolTableCheck(tempName) == -1)
             {
                 printf("Error: symbol name has already been declared");
