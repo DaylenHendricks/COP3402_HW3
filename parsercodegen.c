@@ -39,16 +39,16 @@ int tokenIndex = 0;
 symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
 
-void block(char identArray[50][50]);
+void block(char identArray[50][12]);
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
 int symbolTableCheck(char name[10]);
-void ConstDeclaration(char identArr[50][50]);
-int VarDeclaration(char identArray[50][50], int varCount); //returns number of variables
-int STATEMENT(char identArray[50][50]);
-void CONDITION(char identArray[50][50]);
-void EXPRESSION(char identArray[50][50]);
-void TERM(char identArray[50][50]);
-void FACTOR(char identArray[50][50]);
+void ConstDeclaration(char identArr[50][12]);
+int VarDeclaration(char identArray[50][12], int varCount); //returns number of variables
+int STATEMENT(char identArray[50][12]);
+void CONDITION(char identArray[50][12]);
+void EXPRESSION(char identArray[50][12]);
+void TERM(char identArray[50][12]);
+void FACTOR(char identArray[50][12]);
 
 
 int main(int argc, char *fileName[])
@@ -59,7 +59,7 @@ int main(int argc, char *fileName[])
     int flag = 0;//EOF flag
     int lastVal;
     int varCount = 0;
-    char identArr[50][50];
+    char identArr[50][12];
     for(int i = 0; i <=50 ; i++)//"#" used for HW3 checking end of strings
     {
         for(int j = 0; j <= 50; j++)
@@ -487,6 +487,7 @@ int main(int argc, char *fileName[])
             }
             printf("%d ", tokenArr[i]);
         }
+        varCount = 0;
 
 //end of lexical analyser/scanner_________________________________
 
@@ -507,7 +508,7 @@ int main(int argc, char *fileName[])
 _________________________________________________________________________________________________________________
 _________________________________________________________________________________________________________________*/
 
-void block(char identArr[50][50])
+void block(char identArr[50][12])
 {
     printf("\ncalled block");
     ConstDeclaration(identArr);
@@ -540,7 +541,7 @@ int symbolTableCheck(char name[10])
     return -1;
 }
 
-void ConstDeclaration(char identArr[50][50])
+void ConstDeclaration(char identArr[50][12])
 {
     printf("\ncalled ConstDeclaration");
     int token; //current token
@@ -561,13 +562,15 @@ void ConstDeclaration(char identArr[50][50])
             printf("|token is identsym");
             tokenIndex++;
             token = tokenArr[tokenIndex];
+            printf("|next token:%d", token);
             char tempName [20];
             for(int i = 0; identArr[token][i] != '#'; i++)
             {
-                printf("|%dletters stored", i);
+                printf("|%dletter(s) stored:", (i + 1));
                 tempName[i] = identArr[token][i];
+                printf("%c", identArr[token][i]);
             }
-            printf("|name stored");
+            printf("|name stored: %s", tempName);
             if (symbolTableCheck(tempName) == -1)
             {
                 printf("Error: symbol name has already been declared");
@@ -600,10 +603,11 @@ void ConstDeclaration(char identArr[50][50])
         tokenIndex++;
         token = tokenArr[tokenIndex];
     }
+    else
     printf("const not detected");
 };
 
-int VarDeclaration(char identArray[50][50], int varCount) //returns number of variables
+int VarDeclaration(char identArray[50][12], int varCount) //returns number of variables
 {
     printf("\ncalled VarDeclaration");
     int numVars = 0;
@@ -648,7 +652,7 @@ int VarDeclaration(char identArray[50][50], int varCount) //returns number of va
     return(numVars);
 };
 
-int STATEMENT(char identArray[50][50])
+int STATEMENT(char identArray[50][12])
 {
     printf("\ncalled STATEMENT");
     int token = tokenArr[tokenIndex]; //current token
@@ -786,7 +790,7 @@ int STATEMENT(char identArray[50][50])
     }
 };
 
-void CONDITION(char identArray[50][50])
+void CONDITION(char identArray[50][12])
 {
     printf("\ncalled CONDITION");
     int token = tokenArr[tokenIndex]; //current token
@@ -849,7 +853,7 @@ void CONDITION(char identArray[50][50])
     }
 };
 
-void EXPRESSION(char identArray[50][50])//(HINT: modify it to match the grammar)
+void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
 {
     printf("\ncalled EXPRESSION");
     int token = tokenArr[tokenIndex]; //current token
@@ -905,7 +909,7 @@ void EXPRESSION(char identArray[50][50])//(HINT: modify it to match the grammar)
     }
 };
 
-void TERM(char identArray[50][50])
+void TERM(char identArray[50][12])
 {
     printf("\ncalled TERM");
     int token = tokenArr[tokenIndex]; //current token
@@ -936,7 +940,7 @@ void TERM(char identArray[50][50])
     }
 };
 
-void FACTOR(char identArray[50][50])
+void FACTOR(char identArray[50][12])
 {
     printf("\ncalled FACTOR");
     int token = tokenArr[tokenIndex]; //current token
