@@ -305,57 +305,57 @@ void CONDITION()
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // EXPRESSION
+        EXPRESSION();
         // emit ODD
     }
     else
     {
-        // EXPRESSION
+        EXPRESSION();
         if (token == eqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit EQL
         }
         else if (token == neqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit NEQ
         }
         else if (token == lessym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit LSS
         }
         else if (token == leqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit LEQ
         }
         else if (token == gtrsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit GTR
         }
         else if (token == geqsym)
         {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-            // EXPRESSION
+            EXPRESSION();
             // emit GEQ
         }
         else
         {
-            // error
+            printf("Error: condition must contain comparison operator");
         }
     }
 };
