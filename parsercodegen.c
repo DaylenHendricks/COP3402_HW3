@@ -946,14 +946,9 @@ int main(int argc, char *fileName[])
 
 // PROGRAM
     block(identArr);
-    // if token != periodsym
-        // error
+    if (token != periodsym)
+    {
+        printf("Error: program must end with period");
+    }
     // emit HALT
-
-// BLOCK
-        CONSTDECLARATION();
-    // numVars = VAR-DECLARATION
-    // emit INC (M = 3 + numVars)
-    // STATEMENT
-
 }
