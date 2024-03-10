@@ -672,11 +672,15 @@ int STATEMENT(char identArray[50][12])
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        char tempName [10];
-        for(int i = 0; tempName[i] != '#'; i++)
+        char tempName [20];
+        for(int i = 0; identArray[varCount][i] != '#'; i++)
         {
-            tempName[i] = identArray[token][i];
+            printf("|%dletter(s), stored:", (i + 1));
+            tempName[i] = identArray[varCount][i];
+            printf("%c", tempName[i]);
         }
+        printf("|name stored:%s", tempName);
+        varCount++;
         symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
         {
