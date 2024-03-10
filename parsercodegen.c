@@ -493,7 +493,7 @@ void FACTOR(int ** identArray)
     }
     else
     {
-        // error
+        printf("arithmetic equations must contain operands, parentheses, numbers, or symbols");
     }
 };
 
