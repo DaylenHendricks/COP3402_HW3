@@ -39,6 +39,7 @@ int tokenIndex = 0;
 symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
 int varCount = 0;
+int token = 0;//token for parser
 
 void block(char identArray[50][12]);
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
@@ -545,7 +546,6 @@ void ConstDeclaration(char identArr[50][12])
 {
     printf("\ncalled ConstDeclaration");
     int token; //current token
-    int tokenIndex = 0; //function's tokenArray index
     token = tokenArr[tokenIndex];
 
     if (token == constsym)
@@ -596,6 +596,7 @@ void ConstDeclaration(char identArr[50][12])
             insertSymbolTable(1, tempName, token, 0, 0);
             tokenIndex++;
             token = tokenArr[tokenIndex];
+            printf("end of loop: %d", token);
         } while (token == commasym);
         if (token != semicolonsym)
         {
@@ -612,10 +613,10 @@ int VarDeclaration(char identArray[50][12], int varCount) //returns number of va
 {
     printf("\ncalled VarDeclaration");
     int numVars = 0;
-    int token; //current token
     token = tokenArr[tokenIndex];
+    printf("|tokenID:%d", tokenIndex);
     if (token == varsym)
-    {
+    {printf("|varsym");
         do
         {
             numVars++;
@@ -631,8 +632,11 @@ int VarDeclaration(char identArray[50][12], int varCount) //returns number of va
             char tempName [20];
             for(int i = 0; tempName[i] != '#'; i++)
             {
+                printf("|%dletter(s) stored:", (i + 1));
                 tempName[i] = identArray[token][i];
+                printf("%c", tempName[i]);
             }
+            printf("|name stored:%s", tempName);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
