@@ -39,16 +39,16 @@ int tokenIndex = 0;
 symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
 
-void block(char ** identArr);
+void block(char identArray[50][50]);
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
 int symbolTableCheck(char name[10]);
-void ConstDeclaration(char ** identArr);
-int VarDeclaration(char ** identArray, int varCount); //returns number of variables
-int STATEMENT(char ** identArray);
-void CONDITION(char ** identArray);
-void EXPRESSION(char ** identArray);
-void TERM(char ** identArray);
-void FACTOR(char ** identArray);
+void ConstDeclaration(char identArr[50][50]);
+int VarDeclaration(char identArray[50][50], int varCount); //returns number of variables
+int STATEMENT(char identArray[50][50]);
+void CONDITION(char identArray[50][50]);
+void EXPRESSION(char identArray[50][50]);
+void TERM(char identArray[50][50]);
+void FACTOR(char identArray[50][50]);
 
 
 int main(int argc, char *fileName[])
@@ -500,7 +500,7 @@ int main(int argc, char *fileName[])
 _______________________________________________________________________________
 _____________________________________________________________________________________*/
 
-void block(char **identArr)
+void block(char identArr[50][50])
 {
     ConstDeclaration(identArr);
     int numVars = VarDeclaration(identArr, numVars);
@@ -530,7 +530,7 @@ int symbolTableCheck(char name[10])
     return -1;
 }
 
-void ConstDeclaration(char** identArr)
+void ConstDeclaration(char identArr[50][50])
 {
     int token; //current token
     int tokenIndex = 0; //function's tokenArray index
@@ -588,7 +588,7 @@ void ConstDeclaration(char** identArr)
     }
 };
 
-int VarDeclaration(char ** identArray, int varCount) //returns number of variables
+int VarDeclaration(char identArray[50][50], int varCount) //returns number of variables
 {
     int numVars = 0;
     int token; //current token
@@ -632,7 +632,7 @@ int VarDeclaration(char ** identArray, int varCount) //returns number of variabl
     return(numVars);
 };
 
-int STATEMENT(char ** identArray)
+int STATEMENT(char identArray[50][50])
 {
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
@@ -768,7 +768,7 @@ int STATEMENT(char ** identArray)
         return(0);
     }
 };
-void CONDITION(char ** identArray)
+void CONDITION(char identArray[50][50])
 {
     int token = tokenArr[tokenIndex]; //current token
     if (token == oddsym)
@@ -830,7 +830,7 @@ void CONDITION(char ** identArray)
     }
 };
 
-void EXPRESSION(char ** identArray)//(HINT: modify it to match the grammar)
+void EXPRESSION(char identArray[50][50])//(HINT: modify it to match the grammar)
 {
     int token = tokenArr[tokenIndex]; //current token
     if (token == minussym)
@@ -885,7 +885,7 @@ void EXPRESSION(char ** identArray)//(HINT: modify it to match the grammar)
     }
 };
 
-void TERM(char ** identArray)
+void TERM(char identArray[50][50])
 {
     int token = tokenArr[tokenIndex]; //current token
     FACTOR(identArray);
@@ -915,7 +915,7 @@ void TERM(char ** identArray)
     }
 };
 
-void FACTOR(char ** identArray)
+void FACTOR(char identArray[50][50])
 {
     int token = tokenArr[tokenIndex]; //current token
     int symIdx;
