@@ -39,6 +39,13 @@ symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
 
 
+void block(identArr)
+{
+    ConstDeclaration(identArr);
+    int numVars = VarDeclaration(identArr, numVars);
+    //emit INC (M = 3 + numVars)
+    STATEMENT(identArr);
+};
 
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //insert into symbol table
 {
@@ -938,7 +945,7 @@ int main(int argc, char *fileName[])
     printf("end scan, begin parser");
 
 // PROGRAM
-    // BLOCK
+    block(identArr);
     // if token != periodsym
         // error
     // emit HALT
