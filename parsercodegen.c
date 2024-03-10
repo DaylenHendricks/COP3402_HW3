@@ -189,17 +189,20 @@ int STATEMENT(int ** identArray)
         }
         if (symbolTable[symIdx].kind != 2 /*(not a var)*/)
         {
-            // error
+            printf("Error: only variable values may be altered");
+            exit(0);
         }
         if (token != becomessym)
         {
-            // error
+            printf("Error: assignment statements must use :=");
+            exit(0);
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // EXPRESSION
+        EXPRESSION();
         // emit STO (M = table[symIdx].addr)
-        // return
+        return;
     }
     if (token == beginsym)
     {
@@ -207,51 +210,54 @@ int STATEMENT(int ** identArray)
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // STATEMENT
+            STATEMENT(identArray);
         }while (token == semicolonsym);
         if (token != endsym)
         {
-            // error
-            tokenIndex++;
-            token = tokenArr[tokenIndex];
-        // return
+            printf("Error: begin must be followed by end");
+            exit(0);
         }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        return;
+        
     }
     if (token == ifsym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // CONDITION
+        CONDITION();
         // jpcIdx = current code index
         // emit JPC
         if (token != thensym)
         {
-            // error
+            printf("Error: if must be followed by then");
+            exit(0);
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // STATEMENT
+        STATEMENT(identArray);
         // code[jpcIdx].M = current code index
-        // return
+        return;
     }
     if (token == whilesym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // loopIdx = current code index
-        // CONDITION
+        CONDITION();
         if (token != dosym)
         {
-            // error
+            printf("Error: while must be followed by do");
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // jpcIdx = current code index
         // emit JPC
-        // STATEMENT
+        STATEMENT(identArray);
         // emit JMP (M = loopIdx)
         // code[jpcIdx].M = current code index
-        // return
+        return;
     }
     if (token == readsym)
     {
@@ -261,26 +267,35 @@ int STATEMENT(int ** identArray)
         {
             // error
         }
-        // symIdx = symbolTableCheck (token)
+        char tempName [10];
+        for(int i = 0; tempName[i] != '#'; i++)
+        {
+            tempName[i] = identArray[token][i];
+        }
+        symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
         {
-            // error
+            printf("Error: undeclared identifier");
+            exit(0);
         }
-        // if (table[symIdx].kind != 2 /*not a var*/)
-            // error
+        if (symbolTable[symIdx].kind != 2 /*(not a var)*/)
+        {
+            printf("Error: only variable values may be altered");
+            exit(0);
+        }
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // emit READ
         // emit STO (M = table[symIdx].addr)
-        // return
+        return;
     }
     if (token == writesym)
     {
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // EXPRESSION
+        EXPRESSION();
         // emit WRITE
-        // return
+        return;
     }
 };
 void CONDITION()
