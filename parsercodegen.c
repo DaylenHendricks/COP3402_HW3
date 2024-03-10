@@ -45,7 +45,7 @@ void block(char identArray[50][12]);
 void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
 int symbolTableCheck(char name[10]);
 void ConstDeclaration(char identArr[50][12]);
-int VarDeclaration(char identArray[50][12], int varCount); //returns number of variables
+int VarDeclaration(char identArray[50][12]); //returns number of variables
 int STATEMENT(char identArray[50][12]);
 void CONDITION(char identArray[50][12]);
 void EXPRESSION(char identArray[50][12]);
@@ -515,7 +515,7 @@ void block(char identArr[50][12])
 {
     printf("\ncalled block");
     ConstDeclaration(identArr);
-    int numVars = VarDeclaration(identArr, numVars);
+    int numVars = VarDeclaration(identArr);
     //emit INC (M = 3 + numVars)
     STATEMENT(identArr);
 };
@@ -573,6 +573,7 @@ void ConstDeclaration(char identArr[50][12])
             }
             printf("|name stored: %s", tempName);
             varCount++;
+            printf("varcount:%d", varCount);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
@@ -611,7 +612,7 @@ void ConstDeclaration(char identArr[50][12])
     printf("const not detected");
 };
 
-int VarDeclaration(char identArray[50][12], int varCount) //returns number of variables
+int VarDeclaration(char identArray[50][12]) //returns number of variables
 {
     printf("\ncalled VarDeclaration");
     printf("|tokenID:%d", tokenIndex);
@@ -632,13 +633,15 @@ int VarDeclaration(char identArray[50][12], int varCount) //returns number of va
             tokenIndex++;
             token = tokenArr[tokenIndex];
             char tempName [20];
-            for(int i = 0; tempName[i] != '#'; i++)
+            for(int i = 0; identArray[varCount][i] != '#'; i++)
             {
-                printf("|%dletter(s) stored:", (i + 1));
-                tempName[i] = identArray[token][i];
+                printf("|%dletter(s), stored:", (i + 1));
+                tempName[i] = identArray[varCount][i];
                 printf("%c", tempName[i]);
             }
             printf("|name stored:%s", tempName);
+            varCount++;
+            printf("varcount:%d", varCount);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
