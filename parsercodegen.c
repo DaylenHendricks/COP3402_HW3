@@ -59,7 +59,14 @@ int main(int argc, char *fileName[])
     int flag = 0;//EOF flag
     int lastVal;
     int varCount = 0;
-    char identArr[50][50] = {'#'};//"#" used for HW3 checking end of strings
+    char identArr[50][50];
+    for(int i = 0; i<=50; i++)//"#" used for HW3 checking end of strings
+    {
+        for(int j = 0; j<=50; j++)
+        {
+        identArr[i][j] = '#';
+        }
+    }
     FILE* inputFile = fopen(fileName[1], "r");//file name string for input
 
     //printing source code
@@ -484,7 +491,7 @@ int main(int argc, char *fileName[])
 //end of lexical analyser/scanner_________________________________
 
 //begin of syntactic analyser / parser____________________________
-    printf("end scan, begin parser");
+    printf("\n\nend scan\n begin parser:\n");
 
 // PROGRAM
     int token = tokenArr[0];
@@ -541,7 +548,7 @@ void ConstDeclaration(char identArr[50][50])
     token = tokenArr[tokenIndex];
 
     if (token == constsym)
-    {
+    {printf("|constsym");
         do
         {
             tokenIndex++;
@@ -551,13 +558,16 @@ void ConstDeclaration(char identArr[50][50])
                 printf("Error: constant keyword must be followed by identifier");
                 exit(0);
             }
+            printf("|token is identsym");
             tokenIndex++;
             token = tokenArr[tokenIndex];
             char tempName [20];
-            for(int i = 0; tempName[i] != '#'; i++)
+            for(int i = 0; identArr[token][i] != '#'; i++)
             {
+                printf("%dletter stored", i);
                 tempName[i] = identArr[token][i];
             }
+            printf("|name stored");
             if (symbolTableCheck(tempName) == -1)
             {
                 printf("Error: symbol name has already been declared");
@@ -590,6 +600,7 @@ void ConstDeclaration(char identArr[50][50])
         tokenIndex++;
         token = tokenArr[tokenIndex];
     }
+    printf("const not detected");
 };
 
 int VarDeclaration(char identArray[50][50], int varCount) //returns number of variables
