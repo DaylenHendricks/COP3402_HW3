@@ -235,6 +235,8 @@ int STATEMENT(int ** identArray)
         // STATEMENT
         // code[jpcIdx].M = current code index
         // return
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         if(token != fisym)
         {
             //error
