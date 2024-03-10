@@ -79,7 +79,6 @@ void ConstDeclaration(int** identArr)
                 printf("Error: constant keyword must be followed by identifier");
                 exit(0);
             }
-            // save ident name
             tokenIndex++;
             token = tokenArr[tokenIndex];
             char tempName [20];
@@ -108,7 +107,6 @@ void ConstDeclaration(int** identArr)
             }
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            // add to symbol table (kind 1, saved name, number, 0, 0)
             insertSymbolTable(1, tempName, token, 0, 0);
             tokenIndex++;
             token = tokenArr[tokenIndex];
@@ -151,7 +149,6 @@ int VarDeclaration(int ** identArray, int varCount) //returns number of variable
                 printf("Error: symbol name has already been declared");
                 exit(0);
             }
-            // add to symbol table (kind 2, ident, 0, 0, var# + 2)
             insertSymbolTable(2, tempName, 0, 0, numVars + 2);
             tokenIndex++;
             token = tokenArr[tokenIndex];
@@ -199,7 +196,6 @@ int STATEMENT(int ** identArray)
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        // EXPRESSION
         EXPRESSION(identArray);
         // emit STO (M = table[symIdx].addr)
         return;
@@ -271,7 +267,7 @@ int STATEMENT(int ** identArray)
         token = tokenArr[tokenIndex];
         if (token != identsym)
         {
-            // error
+            printf("Error: const, var, and read keywords must be followed by identifier");
         }
         char tempName [10];
         for(int i = 0; tempName[i] != '#'; i++)
@@ -381,14 +377,14 @@ void EXPRESSION(int ** identArray)//(HINT: modify it to match the grammar)
             {
                 tokenIndex++;
                 token = tokenArr[tokenIndex];
-                // TERM
+                TERM(identArray);
                 // emit ADD
             }
             else
             {
                 tokenIndex++;
                 token = tokenArr[tokenIndex];
-                // TERM
+                TERM(identArray);
                 // emit SUB
             }
         }
@@ -400,21 +396,21 @@ void EXPRESSION(int ** identArray)//(HINT: modify it to match the grammar)
             tokenIndex++;
             token = tokenArr[tokenIndex];
         }
-        // TERM
+        TERM(identArray);
         while (token == plussym || token == minussym)
         {
             if (token == plussym)
             {
                 tokenIndex++;
                 token = tokenArr[tokenIndex];
-                // TERM
+                TERM(identArray);
                 // emit ADD
             }
             else
             {
                 tokenIndex++;
                 token = tokenArr[tokenIndex];
-                // TERM
+                TERM(identArray);
                 // emit SUB
             }
         }
@@ -493,13 +489,15 @@ void FACTOR(int ** identArray)
         if (token != rparentsym)
         {
             printf("Error: right parenthesis must follow left parenthesis");
+            exit(0);
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
     }
     else
     {
-        printf("arithmetic equations must contain operands, parentheses, numbers, or symbols");
+        printf("Error: arithmetic equations must contain operands, parentheses, numbers, or symbols");
+        exit(0);
     }
 };
 
