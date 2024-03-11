@@ -1,0 +1,5 @@
+const a;
+var x;
+begin
+if x = a then x := 1 fi;
+end.
