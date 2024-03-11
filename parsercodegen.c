@@ -40,6 +40,7 @@ symbol symbolTable[MAX_SYMBOL_TABLE_SIZE];
 int tp = 1; //symbol table pointer
 int varCount = 0;
 int token = 0;//token for parser
+int finalToken;//token for period check
 
 void block(char identArray[50][12]);
 void insertSymbolTable(int kind, char name[11], int val, int level, int addr); //insert into symbol table
@@ -544,14 +545,21 @@ int main(int argc, char *fileName[])
 
     tokenIndex = 0;
     block(identArr);
-    printf("Final Token:%d", token);
-    if (token != periodsym)
+    printf("Final Token:%d", finalToken);
+    if (finalToken != periodsym)
     {
         printf("Error: program must end with period");
         exit(0);
     }
     printf("Emit Halt");
     // emit HALT
+
+    //Symbol Table print
+printf("Kind | Name\t | Value | Level | Address | Mark\n");
+for(int i = 0; i < tp; i++)
+{
+    printf("%d \t%s | %d | 0 | %d | 1", symbolTable[tp].kind, symbolTable[tp].name, symbolTable[tp].val, symbolTable[tp].addr);
+}
 }
 
 /*end of main____________________________________________________________________________________________________
@@ -771,7 +779,7 @@ int STATEMENT(char identArray[50][12])
         }
         printf("|becomesym");
         tokenIndex++;
-        token = tokenArr[tokenIndex];
+        finalToken = tokenArr[tokenIndex];
         EXPRESSION(identArray);
         // emit STO (M = table[symIdx].addr)
         return(0);
@@ -797,10 +805,9 @@ int STATEMENT(char identArray[50][12])
             exit(0);
         }
         tokenIndex++;
-        token = tokenArr[tokenIndex];
-        printf("token before return: %d", token);
+        finalToken = tokenArr[tokenIndex];
+        printf("token before return: %d", finalToken);
         return(0);
-        
     }
     if (token == ifsym)
     {printf("|ifsym");
