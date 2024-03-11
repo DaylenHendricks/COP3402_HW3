@@ -2,9 +2,7 @@
 # Daylen Hendricks, Brandon Ramlagan
 
 **To compile the parser:**
-
 $ gcc parsercodegen.c
 
 **To run the parser:**
-
 $ ./a.out in1.txt
