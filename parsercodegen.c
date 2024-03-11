@@ -740,7 +740,7 @@ int STATEMENT(char identArray[50][12])
     {printf("|identsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        char tempName [20] = {'#'};
+        char tempName [11] = {'#'};
         for(int i = 0; identArray[varCount][i] != '#'; i++)
         {
             printf("|%dletter(s), stored:", (i + 1));
@@ -762,12 +762,14 @@ int STATEMENT(char identArray[50][12])
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
+        printf("Token should be 20:%d", token);
         if (token != becomessym)
         {
             printf("|token:%d", token);
             printf("Error: assignment statements must use :=");
             exit(0);
         }
+        printf("|becomesym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         EXPRESSION(identArray);
@@ -781,7 +783,14 @@ int STATEMENT(char identArray[50][12])
             tokenIndex++;
             token = tokenArr[tokenIndex];
             STATEMENT(identArray);
+            printf("whiletoken:%d", token);
         }while (token == semicolonsym);
+    
+        tokenIndex++;
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
+        printf("|token:%d", token);
+
         if (token != endsym)
         {
             printf("Error: begin must be followed by end");
@@ -789,6 +798,7 @@ int STATEMENT(char identArray[50][12])
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
+        printf("token before return: %d", token);
         return(0);
         
     }
@@ -808,9 +818,9 @@ int STATEMENT(char identArray[50][12])
         tokenIndex++;
         token = tokenArr[tokenIndex];
         STATEMENT(identArray);
+        printf("then statement done");
+        printf("token %d", token);
         // code[jpcIdx].M = current code index
-        tokenIndex++;
-        token = tokenArr[tokenIndex];
         if(token != fisym)
         {
         printf("Error: then must be followed by fi");
