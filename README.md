@@ -1,2 +1,5 @@
 # COP3402_HW3
-Tiny PL/0 Compiler
+To compile the parser:
+$ gcc parsercodegen.c
+To run the parser:
+$ ./a.out in1.txt
