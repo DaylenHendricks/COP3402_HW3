@@ -42,8 +42,8 @@ int varCount = 0;
 int token = 0;//token for parser
 
 void block(char identArray[50][12]);
-void insertSymbolTable(int kind, char name[20], int val, int level, int addr); //insert into symbol table
-int symbolTableCheck(char name[10]);
+void insertSymbolTable(int kind, char name[11], int val, int level, int addr); //insert into symbol table
+int symbolTableCheck(char name[11]);
 void ConstDeclaration(char identArr[50][12]);
 int VarDeclaration(char identArray[50][12]); //returns number of variables
 int STATEMENT(char identArray[50][12]);
@@ -568,7 +568,7 @@ void block(char identArr[50][12])
     STATEMENT(identArr);
 };
 
-void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //insert into symbol table
+void insertSymbolTable(int kind, char name[11], int val, int level, int addr) //insert into symbol table
 {
     printf("\ncalled insertSymbolTable");
     symbolTable[tp].kind = kind;
@@ -580,21 +580,32 @@ void insertSymbolTable(int kind, char name[20], int val, int level, int addr) //
     tp++;
 }
 
-int symbolTableCheck(char name[10])
+int symbolTableCheck(char name[11])
 {
     printf("\ncalled symbolTableCheck");
     printf("|Token:%d", token);
-    for(int i = 0; i < tp; i++)
+    printf("|TP:%d", tp);
+    int errcount = 0;//how many dissimilarities
+    int i;
+    for(i = 0; i <= tp; i++)
     {
-        for(int j = 0; j <= 10; j++)
+        errcount = 0;
+        printf("\n|checking name # %d", i);
+        for(int j = 0; j <= (token - 1); j++)
         {
+            printf("|checking letter:%c", symbolTable[i].name[j]);
             if(symbolTable[i].name[j] != name[j])
             {
-                continue;
+                errcount++;
+                printf("||error at name/letter index %d", j);
             }
-            else if(symbolTable[i].name[j] != name[j] && j == token)
+            if(j == (token - 1))
             {
-                return i;
+                if(errcount == 0)
+                {
+                    printf("|WORD FOUND!\n");
+                    return i;
+                }
             }
         }
 
@@ -688,22 +699,22 @@ int VarDeclaration(char identArray[50][12]) //returns number of variables
             }
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            char tempName [20] = {'#'};
+            char tempName [11] = {'#'};
             for(int i = 0; identArray[varCount][i] != '#'; i++)
             {
                 printf("|%dletter(s), stored:", (i + 1));
                 tempName[i] = identArray[varCount][i];
                 printf("%c", tempName[i]);
             }
-            printf("|name stored:%s", tempName);
             varCount++;
-            printf("varcount:%d", varCount);
+            printf("|varcount:%d", varCount);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
                 exit(0);
             }
             insertSymbolTable(2, tempName, 0, 0, numVars + 2);
+            printf("|name stored:%s", tempName);
             tokenIndex++;
             token = tokenArr[tokenIndex];
         } while (token == commasym);
@@ -749,8 +760,11 @@ int STATEMENT(char identArray[50][12])
             printf("Error: only variable values may be altered");
             exit(0);
         }
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         if (token != becomessym)
         {
+            printf("|token:%d", token);
             printf("Error: assignment statements must use :=");
             exit(0);
         }
@@ -800,6 +814,7 @@ int STATEMENT(char identArray[50][12])
         if(token != fisym)
         {
         printf("Error: then must be followed by fi");
+        exit(0);
         }
         printf("|fisym");
         return(0);
@@ -992,6 +1007,7 @@ void TERM(char identArray[50][12])
 
     FACTOR(identArray);
     printf("\nFACTOR->TERM loop");
+    printf("|Token:%d", token);
     while (token == multsym || token == slashsym)
     {
         if (token == multsym)
@@ -1025,7 +1041,7 @@ void FACTOR(char identArray[50][12])
     int symIdx;
     if ((tokenArr[tokenIndex - 1]) == identsym)
     {printf("|identsym");
-        char tempName [20] = {'#'};
+        char tempName [11] = {'#'};
         for(int i = 0; i < token; i++)
         {
             printf("|%dletter(s), stored:", (i + 1));
