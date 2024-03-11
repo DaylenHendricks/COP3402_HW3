@@ -1,0 +1,5 @@
+const a = 1;
+var x;
+begin
+if z = a then x := (a + 1 fi;
+end.
