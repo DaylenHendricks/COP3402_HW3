@@ -1,0 +1,7 @@
+const a = 1;
+var x, y;
+begin
+if x = a then x := 1 fi;
+begin
+if y = a then y := 1 fi;
+end.
