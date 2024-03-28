@@ -521,12 +521,12 @@ int main(int argc, char *fileName[])
     exit(0);
 
     //Symbol Table print
-printf("\n\n\n");
-printf("Kind | Name\t | Value | Level | Address | Mark\n");
-for(int i = 0; i < tp; i++)
-{
-    printf("%d \t%s | %d | 0 | %d | 1", symbolTable[tp].kind, symbolTable[tp].name, symbolTable[tp].val, symbolTable[tp].addr);
-}
+// printf("\n\n\n");
+// printf("Kind | Name\t | Value | Level | Address | Mark\n");
+// for(int i = 0; i < tp; i++)
+// {
+//     printf("%d \t%s | %d | 0 | %d | 1", symbolTable[tp].kind, symbolTable[tp].name, symbolTable[tp].val, symbolTable[tp].addr);
+// }
 }
 
 /*end of main____________________________________________________________________________________________________
@@ -535,7 +535,6 @@ ________________________________________________________________________________
 void printAssembly()
 {
     printf("Line\tOP\tL\tM");
-    printf("0\tJMP\t0\t0");
     int counts =  assemIndex;
     assemIndex = 0;
     for(int i = 0; i <= counts; i++)
@@ -549,7 +548,7 @@ void printAssembly()
 
 void block(char identArr[50][12])
 {
-    //printf("\ncalled block");
+    printf("\ncalled block");
     token = tokenArr[tokenIndex];
     ConstDeclaration(identArr);
     int numVars = VarDeclaration(identArr);
@@ -563,40 +562,40 @@ void block(char identArr[50][12])
 
 void insertSymbolTable(int kind, char name[11], int val, int level, int addr) //insert into symbol table
 {
-    //printf("\ncalled insertSymbolTable");
+    printf("\ncalled insertSymbolTable");
     symbolTable[tp].kind = kind;
     strcpy(symbolTable[tp].name, name);
     symbolTable[tp].val = val;
     symbolTable[tp].level = level;
     symbolTable[tp].addr = val;
-    //printf("|symbol.name: %s", symbolTable[tp].name);
+    printf("|symbol.name: %s", symbolTable[tp].name);
     tp++;
 }
 
 int symbolTableCheck(char name[11])
 {
-    //printf("\ncalled symbolTableCheck");
-    //printf("|Token:%d", token);
-    //printf("|TP:%d", tp);
+    printf("\ncalled symbolTableCheck");
+    printf("|Token:%d", token);
+    printf("|TP:%d", tp);
     int errcount = 0;//how many dissimilarities
     int i;
     for(i = 0; i <= tp; i++)
     {
         errcount = 0;
-        //printf("\n|checking name # %d", i);
+        printf("\n|checking name # %d", i);
         for(int j = 0; j <= (token - 1); j++)
         {
-            //printf("|checking letter:%c", symbolTable[i].name[j]);
+            printf("|checking letter:%c", symbolTable[i].name[j]);
             if(symbolTable[i].name[j] != name[j])
             {
                 errcount++;
-                //printf("||error at name/letter index %d", j);
+                printf("||error at name/letter index %d", j);
             }
             if(j == (token - 1))
             {
                 if(errcount == 0)
                 {
-                    //printf("|WORD FOUND!\n");
+                    printf("|WORD FOUND!\n");
                     return i;
                 }
             }
@@ -608,10 +607,10 @@ int symbolTableCheck(char name[11])
 
 void ConstDeclaration(char identArr[50][12])
 {
-    //printf("\ncalled ConstDeclaration");
-    //printf("|Token:%d", token);
+    printf("\ncalled ConstDeclaration");
+    printf("|Token:%d", token);
     if (token == constsym)
-    {//printf("|constsym");
+    {printf("|constsym");
         do
         {
             tokenIndex++;
@@ -621,20 +620,20 @@ void ConstDeclaration(char identArr[50][12])
                 printf("Error: constant keyword must be followed by identifier");
                 exit(0);
             }
-            //printf("|token is identsym");
+            printf("|token is identsym");
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            //printf("|next token:%d", token);
-            char tempName [20];
+            printf("|next token:%d", token);
+            char tempName [11];
             for(int i = 0; identArr[varCount][i] != '#'; i++)
             {
-                //printf("|%dletter(s) stored:", (i + 1));
+                printf("|%dletter(s) stored:", (i + 1));
                 tempName[i] = identArr[varCount][i];
-                //printf("%c", identArr[varCount][i]);
+                printf("%c", identArr[varCount][i]);
             }
-            //printf("|name stored: %s", tempName);
+            printf("|name stored: %s", tempName);
             varCount++;
-            //printf("varcount:%d", varCount);
+            printf("varcount:%d", varCount);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
@@ -659,7 +658,7 @@ void ConstDeclaration(char identArr[50][12])
             insertSymbolTable(1, tempName, token, 0, 0);
             tokenIndex++;
             token = tokenArr[tokenIndex];
-            //printf("end of loop: %d", token);
+            printf("end of loop: %d", token);
         } while (token == commasym);
         if (token != semicolonsym)
         {
@@ -667,18 +666,18 @@ void ConstDeclaration(char identArr[50][12])
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        //printf("TokenID:%d",tokenIndex);
+        printf("TokenID:%d",tokenIndex);
     }
-    //printf("const not detected");
+    printf("const not detected");
 };
 
 int VarDeclaration(char identArray[50][12]) //returns number of variables
 {
-    //printf("\ncalled VarDeclaration");
-    //printf("|Token:%d", token);
+    printf("\ncalled VarDeclaration");
+    printf("|Token:%d", token);
     int numVars = 0;
     if (token == varsym)
-    {//printf("|varsym");
+    {printf("|varsym");
         do
         {
             numVars++;
@@ -694,19 +693,19 @@ int VarDeclaration(char identArray[50][12]) //returns number of variables
             char tempName [11] = {'#'};
             for(int i = 0; identArray[varCount][i] != '#'; i++)
             {
-                //printf("|%dletter(s), stored:", (i + 1));
+                printf("|%dletter(s), stored:", (i + 1));
                 tempName[i] = identArray[varCount][i];
-                //printf("%c", tempName[i]);
+                printf("%c", tempName[i]);
             }
             varCount++;
-            //printf("|varcount:%d", varCount);
+            printf("|varcount:%d", varCount);
             if (symbolTableCheck(tempName) != -1)
             {
                 printf("Error: symbol name has already been declared");
                 exit(0);
             }
             insertSymbolTable(2, tempName, 0, 0, numVars + 2);
-            //printf("|name stored:%s", tempName);
+            printf("|name stored:%s", tempName);
             tokenIndex++;
             token = tokenArr[tokenIndex];
         } while (token == commasym);
@@ -724,22 +723,22 @@ int VarDeclaration(char identArray[50][12]) //returns number of variables
 
 int STATEMENT(char identArray[50][12])
 {
-    //printf("\ncalled STATEMENT");
-    //printf("|Token:%d", token);
+    printf("\ncalled STATEMENT");
+    printf("|Token:%d", token);
     int symIdx;
 
     if (token == identsym)
-    {//printf("|identsym");
+    {printf("|identsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         char tempName [11] = {'#'};
         for(int i = 0; identArray[varCount][i] != '#'; i++)
         {
-            //printf("|%dletter(s), stored:", (i + 1));
+            printf("|%dletter(s), stored:", (i + 1));
             tempName[i] = identArray[varCount][i];
-            //printf("%c", tempName[i]);
+            printf("%c", tempName[i]);
         }
-        //printf("|name stored:%s", tempName);
+        printf("|name stored:%s", tempName);
         varCount++;
         symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
@@ -754,14 +753,14 @@ int STATEMENT(char identArray[50][12])
         }
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        //printf("Token should be 20:%d", token);
+        printf("Token should be 20:%d", token);
         if (token != becomessym)
         {
-            //printf("|token:%d", token);
+            printf("|token:%d", token);
             printf("Error: assignment statements must use :=");
             exit(0);
         }
-        //printf("|becomesym");
+        printf("|becomesym");
         tokenIndex++;
         finalToken = tokenArr[tokenIndex];
         EXPRESSION(identArray);
@@ -773,19 +772,19 @@ int STATEMENT(char identArray[50][12])
         return(0);
     }
     if (token == beginsym)
-    {//printf("|beginsym");
+    {printf("|beginsym");
         do
         {
             tokenIndex++;
             token = tokenArr[tokenIndex];
             STATEMENT(identArray);
-            //printf("whiletoken:%d", token);
+            printf("whiletoken:%d", token);
         }while (token == semicolonsym);
     
         tokenIndex++;
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        //printf("|token:%d", token);
+        printf("|token:%d", token);
 
         if (token != endsym)
         {
@@ -794,11 +793,11 @@ int STATEMENT(char identArray[50][12])
         }
         tokenIndex++;
         finalToken = tokenArr[tokenIndex];
-        //printf("token before return: %d", finalToken);
+        printf("token before return: %d", finalToken);
         return(0);
     }
     if (token == ifsym)
-    {//printf("|ifsym");
+    {printf("|ifsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         CONDITION(identArray);
@@ -809,27 +808,27 @@ int STATEMENT(char identArray[50][12])
         assemblyTable[assemIndex][2] = 'C';    
         assemIndex++;  
         if (token != thensym)
-        {//printf("|thensym");
+        {printf("|thensym");
             printf("Error: if must be followed by then");
             exit(0);
         }
-        //printf("|thensym");
+        printf("|thensym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         STATEMENT(identArray);
-        //printf("then statement done");
-        //printf("token %d", token);
+        printf("then statement done");
+        printf("token %d", token);
         // code[jpcIdx].M = current code index
         if(token != fisym)
         {
         printf("Error: then must be followed by fi");
         exit(0);
         }
-        //printf("|fisym");
+        printf("|fisym");
         return(0);
     }
     if (token == whilesym)
-    {//printf("|whilesym");
+    {printf("|whilesym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         // loopIdx = current code index
@@ -856,7 +855,7 @@ int STATEMENT(char identArray[50][12])
         return(0);
     }
     if (token == readsym)
-    {//printf("|readsym");
+    {printf("|readsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         if (token != identsym)
@@ -886,7 +885,7 @@ int STATEMENT(char identArray[50][12])
         return(0);
     }
     if (token == writesym)
-    {//printf("|writesym");
+    {printf("|writesym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         EXPRESSION(identArray);
@@ -897,10 +896,10 @@ int STATEMENT(char identArray[50][12])
 
 void CONDITION(char identArray[50][12])
 {
-    //printf("\ncalled CONDITION");
-    //printf("|Token:%d", token);
+    printf("\ncalled CONDITION");
+    printf("|Token:%d", token);
     if (token == oddsym)
-    {//printf("|oddsym");
+    {printf("|oddsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         EXPRESSION(identArray);
@@ -914,7 +913,7 @@ void CONDITION(char identArray[50][12])
     {
         EXPRESSION(identArray);
         if (token == eqsym)
-        {//printf("|eqsym");
+        {printf("|eqsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -925,7 +924,7 @@ void CONDITION(char identArray[50][12])
         assemIndex++;  
         }
         else if (token == neqsym)
-        {//printf("|neqsym");
+        {printf("|neqsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -936,7 +935,7 @@ void CONDITION(char identArray[50][12])
         assemIndex++;  
         }
         else if (token == lessym)
-        {//printf("|lessym");
+        {printf("|lessym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -947,7 +946,7 @@ void CONDITION(char identArray[50][12])
         assemIndex++;  
         }
         else if (token == leqsym)
-        {//printf("|leqsym");
+        {printf("|leqsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -958,7 +957,7 @@ void CONDITION(char identArray[50][12])
         assemIndex++;  
         }
         else if (token == gtrsym)
-        {//printf("|gtrsym");
+        {printf("|gtrsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -969,7 +968,7 @@ void CONDITION(char identArray[50][12])
         assemIndex++;  
         }
         else if (token == geqsym)
-        {//printf("|geqsym");
+        {printf("|geqsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
             EXPRESSION(identArray);
@@ -988,13 +987,13 @@ void CONDITION(char identArray[50][12])
 
 void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
 {
-    //printf("\ncalled EXPRESSION");
-    //printf("|Token:%d", token);
+    printf("\ncalled EXPRESSION");
+    printf("|Token:%d", token);
 
     TERM(identArray);
 
     if (token == minussym)
-    {//printf("|minussym");
+    {printf("|minussym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         TERM(identArray);
@@ -1031,7 +1030,7 @@ void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
     }
     else if (token == plussym)
     {
-        //printf("|plussym");
+        printf("|plussym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         TERM(identArray);
@@ -1065,18 +1064,18 @@ void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
 
 void TERM(char identArray[50][12])
 {
-    //printf("\ncalled TERM");
+    printf("\ncalled TERM");
     tokenIndex++;
     token = tokenArr[tokenIndex]; //current token
-    //printf("|Token:%d", token);
+    printf("|Token:%d", token);
 
     FACTOR(identArray);
-    //printf("\nFACTOR->TERM loop");
-    //printf("|Token:%d", token);
+    printf("\nFACTOR->TERM loop");
+    printf("|Token:%d", token);
     while (token == multsym || token == slashsym)
     {
         if (token == multsym)
-        {//printf("|multsym");
+        {printf("|multsym");
             tokenIndex++;
             token = tokenArr[tokenIndex];
             FACTOR(identArray);
@@ -1087,7 +1086,7 @@ void TERM(char identArray[50][12])
         assemIndex++;   
         }
         else if (token == slashsym)
-        {//printf("|slashsym");
+        {printf("|slashsym");
             tokenIndex++;
             token = tokenArr[tokenIndex];
             FACTOR(identArray);
@@ -1113,19 +1112,19 @@ void TERM(char identArray[50][12])
 
 void FACTOR(char identArray[50][12])
 {
-    //printf("\ncalled FACTOR");
-    //printf("|Token:%d", token);
+    printf("\ncalled FACTOR");
+    printf("|Token:%d", token);
     int symIdx;
     if ((tokenArr[tokenIndex - 1]) == identsym)
-    {//printf("|identsym");
+    {printf("|identsym");
         char tempName [11] = {'#'};
         for(int i = 0; i < token; i++)
         {
-            //printf("|%dletter(s), stored:", (i + 1));
+            printf("|%dletter(s), stored:", (i + 1));
             tempName[i] = identArray[varCount][i];
-            //printf("%c", tempName[i]);
+            printf("%c", tempName[i]);
         }
-        //printf("|name stored:%s", tempName);
+        printf("|name stored:%s", tempName);
         varCount++;
         symIdx = symbolTableCheck(tempName);
         if (symIdx == -1)
@@ -1153,7 +1152,7 @@ void FACTOR(char identArray[50][12])
         token = tokenArr[tokenIndex];
     }
     else if ((tokenArr[tokenIndex - 1]) == numbersym)
-    {//printf("|numbersym");
+    {printf("|numbersym");
 
         assemblyTable[assemIndex][0] = 'L';
         assemblyTable[assemIndex][1] = 'I';
@@ -1164,12 +1163,12 @@ void FACTOR(char identArray[50][12])
         token = tokenArr[tokenIndex];
     }
     else if (token == lparentsym)
-    {//printf("|lparentsym");
+    {printf("|lparentsym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
         EXPRESSION(identArray);
         if (token != rparentsym)
-        {//printf("|rparentsym");
+        {printf("|rparentsym");
             printf("Error: right parenthesis must follow left parenthesis");
             exit(0);
         }
