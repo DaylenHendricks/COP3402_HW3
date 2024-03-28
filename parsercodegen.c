@@ -74,8 +74,8 @@ int main(int argc, char *fileName[])
     }
     FILE* inputFile = fopen(fileName[1], "r");//file name string for input
 
-    //printing source code
-        //printf("Source Program:\n");
+    // printing source code
+        printf("Source Program:\n");
         int printFlag = 0;
         for(int i = 0; printFlag == 0; i++)
         {
@@ -86,7 +86,7 @@ int main(int argc, char *fileName[])
             }
             else
             {
-                //printf("%c", curVal);
+                printf("%c", curVal);
             }
         }
 
@@ -133,9 +133,9 @@ int main(int argc, char *fileName[])
                 index++;//incrementing to next array index
             }
         }
-        //print out lexeme headers
-        //printf("\nLexeme Table:\n\n");
-        //printf("lexeme token type\n");
+        // print out lexeme headers
+        printf("\nLexeme Table:\n\n");
+        printf("lexeme token type\n");
 
 
 //begin tokenization
@@ -155,7 +155,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = constsym;
                 tokenIndex++;
                 i += 5;
-                //printf("const\t28\n");
+                printf("const\t28\n");
             }
             
             //var
@@ -164,7 +164,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = varsym;
                 tokenIndex++;
                 i += 3;
-                //printf("var\t29\n");
+                printf("var\t29\n");
             }
 
             // //procedure
@@ -191,7 +191,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = beginsym;
                 tokenIndex++;
                 i += 5;
-                //printf("begin\t21\n");
+                printf("begin\t21\n");
             }
 
             //end
@@ -200,7 +200,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = endsym;
                 tokenIndex++;
                 i += 3;
-                //printf("end\t22\n");
+                printf("end\t22\n");
             }
             //if
             else if(fileArr[i] == 105 && fileArr[i+1] == 102 && (fileArr[i+2] < 65 || fileArr[i+2] > 90) && (fileArr[i+2] < 97 || fileArr[i+2] > 122))
@@ -208,7 +208,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = ifsym;
                 tokenIndex++;
                 i += 2;
-                //printf("if\t23\n");
+                printf("if\t23\n");
             }
             //fi?
             else if(fileArr[i] == 102 && fileArr[i+1] == 105 && (fileArr[i+2] < 65 || fileArr[i+2] > 90) && (fileArr[i+2] < 97 || fileArr[i+2] > 122))
@@ -216,7 +216,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = fisym;
                 tokenIndex++;
                 i += 2;
-                //printf("fi\t8\n");
+                printf("fi\t8\n");
             }
             //then
             else if(fileArr[i] == 116 && fileArr[i+1] == 104 && fileArr[i+2] == 101 && fileArr[i+3] == 110 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
@@ -224,7 +224,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = thensym;
                 tokenIndex++;
                 i += 4;
-                //printf("then\t24\n");
+                printf("then\t24\n");
             }
             // //else
             // else if(fileArr[i] == 101 && fileArr[i+1] == 108 && fileArr[i+2] == 115 && fileArr[i+3] == 101 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
@@ -240,7 +240,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = whilesym;
                 tokenIndex++;
                 i += 5;
-                //printf("while\t25\n");
+                printf("while\t25\n");
             }
             //do
             else if(fileArr[i] == 100 && fileArr[i+1] == 111 && (fileArr[i+2] < 65 || fileArr[i+2] > 90) && (fileArr[i+2] < 97 || fileArr[i+2] > 122))
@@ -248,7 +248,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = dosym;
                 tokenIndex++;
                 i += 2;
-                //printf("do\t26\n");
+                printf("do\t26\n");
             }
             //read
             else if(fileArr[i] == 114 && fileArr[i+1] == 101 && fileArr[i+2] == 97 && fileArr[i+3] == 100 && (fileArr[i+4] < 65 || fileArr[i+4] > 90) && (fileArr[i+4] < 97 || fileArr[i+4] > 122))
@@ -256,7 +256,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = readsym;
                 tokenIndex++;
                 i += 4;
-                //printf("read\t32\n");
+                printf("read\t32\n");
             }
             //write
             else if(fileArr[i] == 119 && fileArr[i+1] == 114 && fileArr[i+2] == 105 && fileArr[i+3] == 116 && fileArr[i+4] == 101 && (fileArr[i+5] < 65 || fileArr[i+5] > 90) && (fileArr[i+5] < 97 || fileArr[i+5] > 122))
@@ -264,14 +264,14 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = writesym;
                 tokenIndex++;
                 i += 5;
-                //printf("write\t31\n");
+                printf("write\t31\n");
             }
             else if(fileArr[i] == 111 && fileArr[i+1] == 100 && fileArr[i+2] == 100)
             {
                 tokenArr[tokenIndex] = oddsym;
                 tokenIndex++;
                 i += 3;
-                //printf("odd\t31\n");
+                printf("odd\t31\n");
             }
             
 
@@ -288,7 +288,7 @@ int main(int argc, char *fileName[])
                     if((fileArr[i] >= 65 && fileArr[i] <= 90) || (fileArr[i] >= 97 && fileArr[i] <= 122) || (fileArr[i] >= 48 && fileArr[i] <= 57))
                     {
                                 identArr[varCount][identLen] = fileArr[i];
-                                //printf("%c", fileArr[i]);
+                                printf("%c", fileArr[i]);
                                 i++;
                                 identLen++;
                     }
@@ -297,12 +297,12 @@ int main(int argc, char *fileName[])
                         flag2 = 1;
                         if(identLen > 11)
                         {
-                            //printf("\tName too long\n");
+                            printf("\tName too long\n");
                             exit(0);
                         }
                         else
                         {
-                            // printf("\t2\n");
+                            printf("\t2\n");
 
                         }
                     }
@@ -328,7 +328,7 @@ int main(int argc, char *fileName[])
                     i++;
                 }
                 int c = atoi(num);
-                // printf("%d", c);
+                printf("%d", c);
                 tokenArr[tokenIndex] = c;
                 tokenIndex++;
                 if(numLen >5)
@@ -338,7 +338,7 @@ int main(int argc, char *fileName[])
                 }
                 else
                 {
-                    //printf("\t3\n");
+                    printf("\t3\n");
                 }
 
             }
@@ -349,7 +349,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = lparentsym;
                 tokenIndex++;
                 i++;
-                //printf("(\t15\n");
+                printf("(\t15\n");
             }
             //rparentsym
            else if(fileArr[i] == 41)
@@ -357,7 +357,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = rparentsym;
                 tokenIndex++;
                 i++;
-                //printf(")\t16\n");
+                printf(")\t16\n");
             }
             //mult
            else if(fileArr[i] == 42)
@@ -365,7 +365,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = multsym;
                 tokenIndex++;
                 i++;
-                //printf("*\t6\n");
+                printf("*\t6\n");
             }
             //plus
            else if(fileArr[i] == 43)
@@ -373,7 +373,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = plussym;
                 tokenIndex++;
                 i++;
-                //printf("+\t4\n");
+                printf("+\t4\n");
             }
             //comma
            else if(fileArr[i] == 44)
@@ -381,7 +381,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = commasym;
                 tokenIndex++;
                 i++;
-                //printf(",\t17\n");
+                printf(",\t17\n");
             }
             //minus
            else if(fileArr[i] == 45)
@@ -389,7 +389,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = minussym;
                 tokenIndex++;
                 i++;
-                //printf("-\t5\n");
+                printf("-\t5\n");
             }
             //period
             else if(fileArr[i] == 46)
@@ -398,7 +398,7 @@ int main(int argc, char *fileName[])
                 tokenIndex++;
                 i++;
                 flag1 = 1;
-                //printf(".\t19\n\n\n");
+                printf(".\t19\n\n\n");
             }
             //slash
            else if(fileArr[i] == 47)
@@ -406,7 +406,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = slashsym;
                 tokenIndex++;
                 i++;
-                //printf("/\t7\n");
+                printf("/\t7\n");
             }
             //become
             else if(fileArr[i] == 58 && fileArr[i+1] == 61)
@@ -414,7 +414,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = becomessym;
                 tokenIndex++;
                 i += 2;
-                //printf(":=\t20\n");
+                printf(":=\t20\n");
             }
             //semicolon
             else if(fileArr[i] == 59)
@@ -422,7 +422,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = semicolonsym;
                 tokenIndex++;
                 i++;
-                //printf(";\t18\n");
+                printf(";\t18\n");
             }
             //equal
             else if(fileArr[i] == 61)
@@ -430,7 +430,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = eqsym;
                 tokenIndex++;
                 i++;
-                //printf("=\t9\n");
+                printf("=\t9\n");
             }
             //not equal
             else if(fileArr[i] == 60 && fileArr[i+1] == 62)
@@ -438,7 +438,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = neqsym;
                 tokenIndex++;
                 i += 2;
-                //printf("<>\t10\n");
+                printf("<>\t10\n");
             }
           //less than or equal
             else if(fileArr[i] == 60 && fileArr[i+1] == 61)
@@ -446,7 +446,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = leqsym;
                 tokenIndex++;
                 i += 2;
-                //printf("<=\t12\n");
+                printf("<=\t12\n");
             }
           //less than
             else if(fileArr[i] == 60)
@@ -454,7 +454,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = lessym;
                 tokenIndex++;
                 i++;
-                //printf("<\t11\n");
+                printf("<\t11\n");
             }
             //greater or equal
             else if(fileArr[i] == 62 && fileArr[i+1] == 61)
@@ -462,7 +462,7 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = geqsym;
                 tokenIndex++;
                 i+=2;
-                //printf(">=\t14\n");
+                printf(">=\t14\n");
             }
             //greater than
             else if(fileArr[i] == 62)
@@ -470,34 +470,34 @@ int main(int argc, char *fileName[])
                 tokenArr[tokenIndex] = gtrsym;
                 tokenIndex++;
                 i++;
-                //printf(">\t13\n");
+                printf(">\t13\n");
             }
             else
             {
-                //printf("%c\tInvalid Symbol\n", fileArr[i]);
+                printf("%c\tInvalid Symbol\n", fileArr[i]);
                 exit(0);
                 i++;
             }
         }//tokenize while loop end
 
-        ////printing token list
-        //printf("Token List:\n");
+        //printing token list
+        printf("Token List:\n");
         varCount = 0;
         for(int i = 0; i < tokenIndex; i++)
         {
             if(tokenArr[i] == identsym)
             {
-                //printf("%d ", tokenArr[i]);
+                printf("%d ", tokenArr[i]);
                 i++;
                 for(int j = 0; j < tokenArr[i]; j++)
                 {
-                    //printf("%c", identArr[varCount][j]);
+                    printf("%c", identArr[varCount][j]);
                 }
-                //printf(" ");
+                printf(" ");
                 varCount++;
                 i++;
             }
-            //printf("%d ", tokenArr[i]);
+            printf("%d ", tokenArr[i]);
         }
         varCount = 0;
 
@@ -512,7 +512,7 @@ int main(int argc, char *fileName[])
 
     tokenIndex = 0;
     block(identArr);
-    //printf("Final Token:%d", finalToken);
+    printf("Final Token:%d", finalToken);
     if (finalToken != periodsym)
     {
         printf("Error: program must end with period");
