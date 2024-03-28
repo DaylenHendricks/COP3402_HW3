@@ -518,6 +518,17 @@ int main(int argc, char *fileName[])
         printf("Error: program must end with period");
         exit(0);
     }
+    for(int i = 1; i < tp; i++)
+    {
+        printf("\nkind: %d", symbolTable[i].kind);
+        printf("\nname: %s", symbolTable[i].name);
+        printf("\nvalue: %d", symbolTable[i].val);
+        printf("\nlevel: %d", symbolTable[i].level);
+        printf("\naddress: %d", symbolTable[i].addr);
+        symbolTable[i].mark = 1;
+        printf("\nmark: %d", symbolTable[i].mark);
+        printf("\n");
+    }
     exit(0);
 
     //Symbol Table print
@@ -567,7 +578,8 @@ void insertSymbolTable(int kind, char name[11], int val, int level, int addr) //
     strcpy(symbolTable[tp].name, name);
     symbolTable[tp].val = val;
     symbolTable[tp].level = level;
-    symbolTable[tp].addr = val;
+    symbolTable[tp].addr = addr;
+    symbolTable[tp].mark = 0;
     printf("|symbol.name: %s", symbolTable[tp].name);
     tp++;
 }
@@ -624,7 +636,7 @@ void ConstDeclaration(char identArr[50][12])
             tokenIndex++;
             token = tokenArr[tokenIndex];
             printf("|next token:%d", token);
-            char tempName [11];
+            char tempName [11] = {'#'};
             for(int i = 0; identArr[varCount][i] != '#'; i++)
             {
                 printf("|%dletter(s) stored:", (i + 1));
@@ -995,12 +1007,7 @@ void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
     {printf("|minussym");
         tokenIndex++;
         token = tokenArr[tokenIndex];
-        TERM(identArray);
-        // emit NEG
-        assemblyTable[assemIndex][0] = 'N';
-        assemblyTable[assemIndex][1] = 'E';
-        assemblyTable[assemIndex][2] = 'G';    
-        assemIndex++;   
+        TERM(identArray);  
         while (token == plussym || token == minussym)
         {
             if (token == plussym)
