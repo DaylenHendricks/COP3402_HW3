@@ -989,7 +989,6 @@ void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
 {
     printf("\ncalled EXPRESSION");
     printf("|Token:%d", token);
-
     TERM(identArray);
 
     if (token == minussym)
@@ -1065,7 +1064,6 @@ void EXPRESSION(char identArray[50][12])//(HINT: modify it to match the grammar)
 void TERM(char identArray[50][12])
 {
     printf("\ncalled TERM");
-    tokenIndex++;
     token = tokenArr[tokenIndex]; //current token
     printf("|Token:%d", token);
 
@@ -1115,8 +1113,10 @@ void FACTOR(char identArray[50][12])
     printf("\ncalled FACTOR");
     printf("|Token:%d", token);
     int symIdx;
-    if ((tokenArr[tokenIndex - 1]) == identsym)
+    if ((tokenArr[tokenIndex]) == identsym)
     {printf("|identsym");
+        tokenIndex++;
+        token = tokenArr[tokenIndex];
         char tempName [11] = {'#'};
         for(int i = 0; i < token; i++)
         {
@@ -1138,7 +1138,7 @@ void FACTOR(char identArray[50][12])
         assemblyTable[assemIndex][0] = 'L';
         assemblyTable[assemIndex][1] = 'I';
         assemblyTable[assemIndex][2] = 'T';    
-        assemIndex++;   
+        assemIndex++;
         }
         else //(var)
         {
@@ -1151,7 +1151,7 @@ void FACTOR(char identArray[50][12])
         tokenIndex++;
         token = tokenArr[tokenIndex];
     }
-    else if ((tokenArr[tokenIndex - 1]) == numbersym)
+    else if ((tokenArr[tokenIndex]) == numbersym)
     {printf("|numbersym");
 
         assemblyTable[assemIndex][0] = 'L';
