@@ -1163,7 +1163,7 @@ void FACTOR(char identArray[50][12])
 
         assemblyTable[assemIndex][0] = 'L';
         assemblyTable[assemIndex][1] = 'I';
-        assemblyTable[assemIndex][2] = 'T';    
+        assemblyTable[assemIndex][2] = 'T';
         assemIndex++;   
 
         tokenIndex++;
